@@ -1,0 +1,15 @@
+----------------------------------------------------------------------------
+
+VG @ 16.05.2018. 06:07
+
+Implementiran je osnovni model, zajedno sa repozitorijumima, servisima, security i DTO (Data Transfer Object) klasama.
+Nije jos uvek kompletan, ali pravicu izmene u hodu. Potrebno je jos povezati bazu podataka.
+TODO: Pokrenuti server. (trenutno ne moze da se pokrene)
+
+Fale jos klase za oglase, rekvizite itd, njihove repozitorijume, DTO, servise i sta vec treba. Dodajte to po potrebi.
+
+Neke osnovne RestController-e dodajem kada budem mogao, za funkcionalnosti koje su mi dodeljene u projektnom zadatku.
+
+Planirano je da se koriste MySQL za bazu, Spring (Maven + Rest) za back end i JQuery biblioteka za front end.
+
+----------------------------------------------------------------------------
