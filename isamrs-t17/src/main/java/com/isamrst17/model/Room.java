@@ -14,10 +14,10 @@ public class Room {
 
   private String name;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
   private Theatre theatre;
 
-  @OneToMany
+  @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
   private Set<Seat> seats = new HashSet<>();
 
   public Room() {

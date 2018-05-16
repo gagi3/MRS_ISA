@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.isamrst17.model.Screening;
 import com.isamrst17.model.Ticket;
 import com.isamrst17.model.Ticket.Type;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
   List<Ticket> findByPrice(Double price);

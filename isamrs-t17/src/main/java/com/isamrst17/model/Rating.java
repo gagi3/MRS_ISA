@@ -3,6 +3,8 @@ package com.isamrst17.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Rating {
@@ -32,8 +34,11 @@ public class Rating {
   private Star screeningRating;
   private Star showRating;
 
+  @ManyToOne
   private User user;
+  @ManyToOne
   private Screening screening;
+  @ManyToOne
   private Show show;
 
   public Rating() {

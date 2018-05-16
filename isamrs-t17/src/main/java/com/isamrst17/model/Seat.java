@@ -17,7 +17,7 @@ public class Seat {
   private Integer column;
   private Segment segment;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
   private Room room;
 
   public Seat() {

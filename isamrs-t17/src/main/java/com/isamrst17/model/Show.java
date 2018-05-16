@@ -15,10 +15,13 @@ public class Show {
   private String name;
   private String desc;
 
-  @OneToMany
+  @ManyToMany
+  private Set<Theatre> theatres = new HashSet<>();
+
+  @OneToMany(mappedBy = "show", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
   private Set<Rating> ratings = new HashSet<>();
 
-  @OneToMany
+  @OneToMany(mappedBy = "show", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
   private Set<Screening> screenings = new HashSet<>();
 
   public Show() {
@@ -46,6 +49,14 @@ public class Show {
 
   public void setDesc(String desc) {
     this.desc = desc;
+  }
+
+  public Set<Theatre> getTheatres() {
+    return theatres;
+  }
+
+  public void setTheatres(Set<Theatre> theatres) {
+    this.theatres = theatres;
   }
 
   public Set<Rating> getRatings() {

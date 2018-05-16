@@ -15,14 +15,16 @@ public class Screening {
 
   @ManyToOne
   private Show show;
+
+  @ManyToOne
   private Theatre theatre;
 
   private Date date;
 
-  @OneToMany
+  @OneToMany(mappedBy = "screening", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
   private Set<Rating> ratings = new HashSet<>();
 
-  @OneToMany
+  @OneToMany(mappedBy = "screening", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
   private Set<Ticket> tickets = new HashSet<>();
 
   public Screening() {

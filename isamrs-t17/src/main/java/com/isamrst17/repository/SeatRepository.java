@@ -5,7 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.isamrst17.model.Room;
 import com.isamrst17.model.Seat;
 import com.isamrst17.model.Seat.Segment;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface SeatRepository extends JpaRepository<Seat, Long> {
 
   public List<Seat> findByRoom(Room room);

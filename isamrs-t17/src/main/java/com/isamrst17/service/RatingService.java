@@ -38,9 +38,6 @@ public class RatingService {
     repository.deleteById(id);
   }
 
-  public List<Rating> findByPublicationDate(Date publicationDate) {
-    return repository.findByPublicationDate(publicationDate);
-  }
 
   public List<Rating> findByShow(Show show) {
     return repository.findByShow(show);

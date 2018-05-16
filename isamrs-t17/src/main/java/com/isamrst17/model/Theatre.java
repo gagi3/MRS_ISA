@@ -13,8 +13,12 @@ public class Theatre {
   private Long id;
 
   private String name;
+  @OneToOne
   private Address address;
   private String desc;
+
+  @OneToMany
+  private Set<Screening> screenings = new HashSet<>();
 
   @OneToMany
   private Set<Room> rooms = new HashSet<>();
@@ -55,6 +59,14 @@ public class Theatre {
 
   public void setDesc(String desc) {
     this.desc = desc;
+  }
+
+  public Set<Screening> getScreenings() {
+    return screenings;
+  }
+
+  public void setScreenings(Set<Screening> screenings) {
+    this.screenings = screenings;
   }
 
   public Set<Room> getRooms() {

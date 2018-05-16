@@ -20,10 +20,11 @@ public class Ticket {
   private String number;
   private Date issueDate;
   private Double price;
+  @OneToOne
   private Seat seat;
   private Type type;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
   private Screening screening;
 
   public Ticket() {

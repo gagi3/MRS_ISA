@@ -3,7 +3,9 @@ package com.isamrst17.model;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -23,8 +25,8 @@ public class User {
   private Date registrationDate;
   private UserState userState = UserState.Active;
 
-  @OneToMany
-  private Set<User> friends = new HashSet<>();
+//  @OneToMany(mappedBy = "user", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+//  private Set<User> friends = new HashSet<>();
 
   public Long getId() {
     return id;

@@ -4,10 +4,12 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.isamrst17.model.User;
 import com.isamrst17.model.User.UserState;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-  User findByUsername(String username);
-  List<User> findByUserState(UserState userState);
+  public User findByUsername(String username);
+  public List<User> findByUserState(UserState userState);
 
 }
