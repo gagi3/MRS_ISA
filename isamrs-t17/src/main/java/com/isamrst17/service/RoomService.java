@@ -15,7 +15,7 @@ public class RoomService {
   @Autowired
   private RoomRepository repository;
 
-  public Room findOne(Long id) {
+  public Room find(Long id) {
     return repository.getOne(id);
   }
 
@@ -32,7 +32,7 @@ public class RoomService {
   }
 
   public void delete(Long id) {
-    repository.deleteById(id);
+    repository.delete(id);
   }
 
   public List<Room> findByTheatre(Theatre theatre) {

@@ -20,9 +20,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   @Autowired
   private UserRepository repository;
 
-
-  private EntityManagerFactory entityManagerFactory;
-
   @Transactional
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     User user = repository.findByUsername(username);

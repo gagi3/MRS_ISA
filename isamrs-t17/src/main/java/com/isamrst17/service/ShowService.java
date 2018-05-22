@@ -14,7 +14,7 @@ public class ShowService {
   @Autowired
   private ShowRepository repository;
 
-  public Show findOne(Long id) {
+  public Show find(Long id) {
     return repository.getOne(id);
   }
 
@@ -31,6 +31,6 @@ public class ShowService {
   }
 
   public void remove(Long id) {
-    repository.deleteById(id);
+    repository.delete(id);
   }
 }

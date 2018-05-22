@@ -14,7 +14,7 @@ public class TheatreService {
   @Autowired
   private TheatreRepository repository;
 
-  public Theatre findOne(Long id) {
+  public Theatre find(Long id) {
     return repository.getOne(id);
   }
 
@@ -31,6 +31,6 @@ public class TheatreService {
   }
 
   public void remove(Long id) {
-    repository.deleteById(id);
+    repository.delete(id);
   }
 }

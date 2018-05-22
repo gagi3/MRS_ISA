@@ -24,7 +24,7 @@ public class AppLoader implements ApplicationRunner {
 
       Admin admin = new Admin();
       admin.setUsername("admin");
-      admin.setPassword("admin");
+      admin.setPassword(encoder.encode("admin"));
       admin.setRegistrationDate(new Date());
 
       adminRepository.save(admin);

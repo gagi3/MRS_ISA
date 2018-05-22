@@ -17,7 +17,7 @@ public class TicketService {
   @Autowired
   private TicketRepository repository;
 
-  public Ticket findOne(Long id) {
+  public Ticket find(Long id) {
     return repository.getOne(id);
   }
 
@@ -34,7 +34,7 @@ public class TicketService {
   }
 
   public void remove(Long id) {
-    repository.deleteById(id);
+    repository.delete(id);
   }
 
   List<Ticket> findByPrice(Double price) {

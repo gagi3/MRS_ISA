@@ -3,6 +3,7 @@ package com.isamrst17.security;
 import com.isamrst17.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,11 +23,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @SpringBootApplication
 @Configuration
 @EnableWebSecurity
+@EnableAutoConfiguration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-  @Autowired
-  private UserDetailsServiceImpl userDetailsService;
+//  @Autowired
+//  private UserDetailsServiceImpl userDetailsService;
 
   @Autowired
   public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {

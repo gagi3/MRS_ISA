@@ -14,7 +14,7 @@ public class PersonService {
   @Autowired
   private PersonRepository repository;
 
-  public Person findOne(Long id) {
+  public Person find(Long id) {
     return repository.getOne(id);
   }
 
@@ -31,6 +31,6 @@ public class PersonService {
   }
 
   public void remove(Long id) {
-    repository.deleteById(id);
+    repository.delete(id);
   }
 }

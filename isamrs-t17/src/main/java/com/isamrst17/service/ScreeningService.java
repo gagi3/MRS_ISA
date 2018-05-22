@@ -16,7 +16,7 @@ public class ScreeningService {
   @Autowired
   private ScreeningRepository repository;
 
-  public Screening findOne(Long id) {
+  public Screening find(Long id) {
     return repository.getOne(id);
   }
 
@@ -33,7 +33,7 @@ public class ScreeningService {
   }
 
   public void remove(Long id) {
-    repository.deleteById(id);
+    repository.delete(id);
   }
 
   public List<Screening> findByShow(Show show) {

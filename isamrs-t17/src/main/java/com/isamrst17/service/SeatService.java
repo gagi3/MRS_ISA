@@ -16,7 +16,7 @@ public class SeatService {
   @Autowired
   private SeatRepository repository;
 
-  public Seat findOne(Long id) {
+  public Seat find(Long id) {
     return repository.getOne(id);
   }
 
@@ -33,7 +33,7 @@ public class SeatService {
   }
 
   public void remove(Long id) {
-    repository.deleteById(id);
+    repository.delete(id);
   }
 
 

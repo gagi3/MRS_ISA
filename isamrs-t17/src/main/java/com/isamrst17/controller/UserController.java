@@ -60,8 +60,8 @@ public class UserController {
 
   @RequestMapping(value = "/rate/{showID}/{screeningID}", method = RequestMethod.POST)
   public ResponseEntity<RatingDTO> rate(Principal principal, @PathVariable Long showID, @PathVariable Long screeningID, @RequestBody RatingDTO ratingDTO) {
-    Show show = showService.findOne(showID);
-    Screening screening = screeningService.findOne(screeningID);
+    Show show = showService.find(showID);
+    Screening screening = screeningService.find(screeningID);
 
     if(show == null || screening == null) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -14,7 +14,7 @@ public class CityService {
   @Autowired
   private CityRepository repository;
 
-  public City findOne(Long id) {
+  public City find(Long id) {
     return repository.getOne(id);
   }
 
@@ -31,7 +31,7 @@ public class CityService {
   }
 
   public void remove(Long id) {
-    repository.deleteById(id);
+    repository.delete(id);
   }
 
 }

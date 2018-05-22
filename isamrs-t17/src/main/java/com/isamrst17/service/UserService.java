@@ -14,7 +14,7 @@ public class UserService {
   @Autowired
   private UserRepository repository;
 
-  public User findOne(Long id) {
+  public User find(Long id) {
     return repository.getOne(id);
   }
 
@@ -31,7 +31,7 @@ public class UserService {
   }
 
   public void remove(Long id) {
-    repository.deleteById(id);
+    repository.delete(id);
   }
 
   public User findByUsername(String username) {

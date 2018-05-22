@@ -15,7 +15,7 @@ public class AddressService {
   @Autowired
   private AddressRepository repository;
 
-  public Address findOne(Long id) {
+  public Address find(Long id) {
     return repository.getOne(id);
   }
 
@@ -32,7 +32,7 @@ public class AddressService {
   }
 
   public void remove(Long id) {
-    repository.deleteById(id);
+    repository.delete(id);
   }
 
   public List<Address> findByCity(City city) {

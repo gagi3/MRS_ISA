@@ -18,7 +18,7 @@ public class RatingService {
   @Autowired
   private RatingRepository repository;
 
-  public Rating findOne(Long id) {
+  public Rating find(Long id) {
     return repository.getOne(id);
   }
 
@@ -35,7 +35,7 @@ public class RatingService {
   }
 
   public void delete(Long id) {
-    repository.deleteById(id);
+    repository.delete(id);
   }
 
 
