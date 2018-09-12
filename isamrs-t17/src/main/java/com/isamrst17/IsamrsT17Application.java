@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@EnableJpaRepositories("com.isamrst17.repository")
-@SpringBootApplication
-@EnableAutoConfiguration
+@SpringBootApplication(scanBasePackages={"com.isamrst17"})
+@EnableJpaRepositories(basePackages="com.isamrst17.repository")
+//@EnableAutoConfiguration
 @ComponentScan(basePackages = "com.isamrst17")
 public class IsamrsT17Application {
 

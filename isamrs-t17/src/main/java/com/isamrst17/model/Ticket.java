@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Entity
+//@Table(name = "ticket")
 public class Ticket {
 
   public enum Type {
@@ -15,19 +16,37 @@ public class Ticket {
 
   @Id
   @GeneratedValue
+  //@Column(name = "ticket_id")
   private Long id;
 
+  private boolean sold;
+
+  //@Column(name = "number")
   private String number;
+  //@Column(name = "issue_date")
   private Date issueDate;
+  //@Column(name = "price")
   private Double price;
   @OneToOne
+  //@JoinTable(name = "ticket_seat", joinColumns = @JoinColumn(name = "ticket_id"), inverseJoinColumns = @JoinColumn(name = "seat_id"))
   private Seat seat;
+
+  //@Column(name = "type")
   private Type type;
 
   @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+  //@JoinTable(name = "ticket_screening", joinColumns = @JoinColumn(name = "ticket_id"), inverseJoinColumns = @JoinColumn(name = "screening_id"))
   private Screening screening;
 
   public Ticket() {
+  }
+
+  public boolean isSold() {
+    return sold;
+  }
+
+  public void setSold(boolean sold) {
+    this.sold = sold;
   }
 
   public Long getId() {

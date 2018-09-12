@@ -3,21 +3,28 @@ package com.isamrst17.model;
 import javax.persistence.*;
 
 @Entity
+//@Table(name = "seat")
 public class Seat {
 
   public enum Segment {
-    Center, Front, Back, Left, Right, VIP
-  };
+    Regular, VIP
+  }
 
   @Id
   @GeneratedValue
+  //@seatColumn(name = "seat_id")
   private Long id;
 
-  private Integer row;
-  private Integer column;
+  //@seatColumn(name = "seatRow")
+  private Integer seatRow;
+  //@seatColumn(name = "seatColumn")
+  private Integer seatColumn;
+  //@seatColumn(name = "segment")
+  @Enumerated(EnumType.STRING)
   private Segment segment;
 
   @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+  //@JoinTable(name="seat_room", joinColumns = @JoinColumn(name="seat_id"), inverseJoinColumns = @JoinColumn(name="room_id"))
   private Room room;
 
   public Seat() {
@@ -31,20 +38,20 @@ public class Seat {
     this.id = id;
   }
 
-  public Integer getRow() {
-    return row;
+  public Integer getSeatRow() {
+    return seatRow;
   }
 
-  public void setRow(Integer row) {
-    this.row = row;
+  public void setSeatRow(Integer seatRow) {
+    this.seatRow = seatRow;
   }
 
-  public Integer getColumn() {
-    return column;
+  public Integer getSeatColumn() {
+    return seatColumn;
   }
 
-  public void setColumn(Integer column) {
-    this.column = column;
+  public void setSeatColumn(Integer seatColumn) {
+    this.seatColumn = seatColumn;
   }
 
   public Segment getSegment() {

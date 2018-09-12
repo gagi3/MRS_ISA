@@ -6,7 +6,7 @@ public class AddressDTO {
 
   private Long id;
   private String address;
-  private Integer postalCode;
+  private String city;
 
   public AddressDTO() {
   }
@@ -14,7 +14,15 @@ public class AddressDTO {
   public AddressDTO(Address address) {
     this.id = address.getId();
     this.address = address.getAddress();
-    this.postalCode = address.getPostalCode();
+    this.city = address.getCity().getName();
+  }
+
+  public String getCity() {
+    return city;
+  }
+
+  public void setCity(String city) {
+    this.city = city;
   }
 
   public Long getId() {
@@ -33,11 +41,4 @@ public class AddressDTO {
     this.address = address;
   }
 
-  public Integer getPostalCode() {
-    return postalCode;
-  }
-
-  public void setPostalCode(Integer postalCode) {
-    this.postalCode = postalCode;
-  }
 }

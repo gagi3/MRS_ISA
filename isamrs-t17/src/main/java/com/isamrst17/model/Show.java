@@ -6,22 +6,82 @@ import java.util.Set;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "show_t")
 public class Show {
+
+  public enum ShowType {
+    MOVIE, PLAY
+  }
 
   @Id
   @GeneratedValue
+  //@Column(name = "show_id")
   private Long id;
 
-  private String name;
-  private String desc;
+  //@Column(name = "name")
+  private String showName;
+  //@Column(name = "desc")
+  private String showDesc;
 
-  @ManyToMany
-  private Set<Theatre> theatres = new HashSet<>();
+//  @Enumerated(EnumType.STRING)
+  private ShowType showType;
 
-  @OneToMany(mappedBy = "show", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+  private String genre;
+  private String director;
+//  @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+  @ElementCollection(targetClass=String.class)
+  private Set<String> actors = new HashSet<>();
+  private Integer length;
+
+  public String getGenre() {
+    return genre;
+  }
+
+  public void setGenre(String genre) {
+    this.genre = genre;
+  }
+
+  public String getDirector() {
+    return director;
+  }
+
+  public void setDirector(String director) {
+    this.director = director;
+  }
+
+  public Set<String> getActors() {
+    return actors;
+  }
+
+  public void setActors(Set<String> actors) {
+    this.actors = actors;
+  }
+
+  public Integer getLength() {
+    return length;
+  }
+
+  public void setLength(Integer length) {
+    this.length = length;
+  }
+
+  public ShowType getShowType() {
+    return showType;
+  }
+
+  public void setShowType(ShowType showType) {
+    this.showType = showType;
+  }
+  //  @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+//  //@JoinTable(name="show_theatres", joinColumns = @JoinColumn(name="show_id"), inverseJoinColumns = @JoinColumn(name="theatre_id"))
+//  private Set<Theatre> theatres = new HashSet<>();
+
+  @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+  //@JoinTable(name="show_ratings", joinColumns = @JoinColumn(name="show_id"), inverseJoinColumns = @JoinColumn(name="rating_id"))
   private Set<Rating> ratings = new HashSet<>();
 
   @OneToMany(mappedBy = "show", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+  //@JoinTable(name="show_screenings", joinColumns = @JoinColumn(name="show_id"), inverseJoinColumns = @JoinColumn(name="screening_id"))
   private Set<Screening> screenings = new HashSet<>();
 
   public Show() {
@@ -35,29 +95,29 @@ public class Show {
     this.id = id;
   }
 
-  public String getName() {
-    return name;
+  public String getShowName() {
+    return showName;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setShowName(String showName) {
+    this.showName = showName;
   }
 
-  public String getDesc() {
-    return desc;
+  public String getShowDesc() {
+    return showDesc;
   }
 
-  public void setDesc(String desc) {
-    this.desc = desc;
+  public void setShowDesc(String showDesc) {
+    this.showDesc = showDesc;
   }
 
-  public Set<Theatre> getTheatres() {
-    return theatres;
-  }
-
-  public void setTheatres(Set<Theatre> theatres) {
-    this.theatres = theatres;
-  }
+//  public Set<Theatre> getTheatres() {
+//    return theatres;
+//  }
+//
+//  public void setTheatres(Set<Theatre> theatres) {
+//    this.theatres = theatres;
+//  }
 
   public Set<Rating> getRatings() {
     return ratings;

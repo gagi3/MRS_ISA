@@ -1,6 +1,5 @@
 package com.isamrst17.dto;
 
-import java.util.Date;
 import com.isamrst17.model.Person;
 import com.isamrst17.model.User;
 
@@ -9,9 +8,10 @@ public class UserDTO {
   private Long id;
   private String username;
   private String password;
-  private Date registrationDate;
   private String firstName;
   private String lastName;
+  private String phoneNumber;
+  
 
   public UserDTO() {
   }
@@ -19,9 +19,9 @@ public class UserDTO {
   public UserDTO(User user) {
     this.id = user.getId();
     this.username = user.getUsername();
-    this.registrationDate = user.getRegistrationDate();
     this.firstName = ((Person) user).getFirstName();
     this.lastName = ((Person) user).getLastName();
+    this.phoneNumber = user.getPassword();
   }
 
   public Long getId() {
@@ -47,13 +47,13 @@ public class UserDTO {
   public void setPassword(String password) {
     this.password = password;
   }
-
-  public Date getRegistrationDate() {
-    return registrationDate;
+  
+  public String getPhoneNumber() {
+	  return phoneNumber;
   }
-
-  public void setRegistrationDate(Date registrationDate) {
-    this.registrationDate = registrationDate;
+  
+  public void setPhoneNumber(String phoneNumber) {
+	  this.phoneNumber = phoneNumber;
   }
 
   public String getFirstName() {
@@ -71,4 +71,5 @@ public class UserDTO {
   public void setLastName(String lastName) {
     this.lastName = lastName;
   }
+
 }

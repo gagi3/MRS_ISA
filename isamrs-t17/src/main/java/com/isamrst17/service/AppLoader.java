@@ -1,11 +1,12 @@
 package com.isamrst17.service;
 
-import java.util.Date;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+
 import com.isamrst17.model.Admin;
+import com.isamrst17.model.SystemAdmin;
 import com.isamrst17.repository.AdminRepository;
 
 
@@ -22,10 +23,9 @@ public class AppLoader implements ApplicationRunner {
     if(adminRepository.findAll().size() == 0) {
       BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-      Admin admin = new Admin();
+      Admin admin = new SystemAdmin();
       admin.setUsername("admin");
       admin.setPassword(encoder.encode("admin"));
-      admin.setRegistrationDate(new Date());
 
       adminRepository.save(admin);
       System.out.println("Admin added to database.");

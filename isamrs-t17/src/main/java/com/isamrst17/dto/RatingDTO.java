@@ -6,18 +6,18 @@ import com.isamrst17.model.Rating.Star;
 public class RatingDTO {
 
   private Long id;
-  private Star showRating;
-  private Star screeningRating;
-  private UserDTO user;
+//  private Integer showRating;
+//  private Integer theatreRating;
+  private Integer rating;
 
   public RatingDTO() {
   }
 
   public RatingDTO(Rating rating) {
     this.id = rating.getId();
-    this.showRating = rating.getShowRating();
-    this.screeningRating = rating.getScreeningRating();
-    this.user = new UserDTO(rating.getUser());
+//    this.showRating = rating.getRating().getValue();
+//    this.theatreRating = rating.getTheatreRating().getValue();
+    this.rating = rating.getRating().getValue();
   }
 
   public Long getId() {
@@ -28,27 +28,27 @@ public class RatingDTO {
     this.id = id;
   }
 
-  public Star getShowRating() {
-    return showRating;
+  public Integer getRating() {
+    return rating;
   }
 
-  public void setShowRating(Star showRating) {
-    this.showRating = showRating;
+  public void setRating(Integer rating) {
+    this.rating = rating;
   }
 
-  public Star getScreeningRating() {
-    return screeningRating;
-  }
-
-  public void setScreeningRating(Star screeningRating) {
-    this.screeningRating = screeningRating;
-  }
-
-  public UserDTO getUser() {
-    return user;
-  }
-
-  public void setUser(UserDTO user) {
-    this.user = user;
-  }
+  //  public Integer getShowRating() {
+//    return showRating;
+//  }
+//
+//  public void setShowRating(Integer showRating) {
+//    this.showRating = showRating;
+//  }
+//
+//  public Integer getTheatreRating() {
+//    return theatreRating;
+//  }
+//
+//  public void setTheatreRating(Integer theatreRating) {
+//    this.theatreRating = theatreRating;
+//  }
 }

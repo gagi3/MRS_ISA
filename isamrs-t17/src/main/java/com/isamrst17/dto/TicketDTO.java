@@ -12,9 +12,10 @@ public class TicketDTO {
   private String number;
   private Date issueDate;
   private Double price;
-  private Seat seat;
+  private SeatDTO seat;
   private Type type;
-  private Screening screening;
+  private ScreeningDTO screening;
+  private boolean sold;
 
   public TicketDTO() {
   }
@@ -24,9 +25,18 @@ public class TicketDTO {
     this.number = ticket.getNumber();
     this.issueDate = ticket.getIssueDate();
     this.price = ticket.getPrice();
-    this.seat = ticket.getSeat();
+    this.seat = new SeatDTO(ticket.getSeat());
     this.type = ticket.getType();
-    this.screening = ticket.getScreening();
+    this.screening = new ScreeningDTO(ticket.getScreening());
+    this.sold = sold;
+  }
+
+  public boolean isSold() {
+    return sold;
+  }
+
+  public void setSold(boolean sold) {
+    this.sold = sold;
   }
 
   public Long getId() {
@@ -61,11 +71,11 @@ public class TicketDTO {
     this.price = price;
   }
 
-  public Seat getSeat() {
+  public SeatDTO getSeat() {
     return seat;
   }
 
-  public void setSeat(Seat seat) {
+  public void setSeat(SeatDTO seat) {
     this.seat = seat;
   }
 
@@ -77,11 +87,11 @@ public class TicketDTO {
     this.type = type;
   }
 
-  public Screening getScreening() {
+  public ScreeningDTO getScreening() {
     return screening;
   }
 
-  public void setScreening(Screening screening) {
+  public void setScreening(ScreeningDTO screening) {
     this.screening = screening;
   }
 }

@@ -6,18 +6,23 @@ import java.util.Set;
 import javax.persistence.*;
 
 @Entity
+//@Table(name="room")
 public class Room {
 
   @Id
   @GeneratedValue
+  //@Column(name="room_id")
   private Long id;
 
+  //@Column(name="room_name")
   private String name;
 
   @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+  //@JoinTable(name="room_theatre", joinColumns = @JoinColumn(name="room_id"), inverseJoinColumns = @JoinColumn(name="theatre_id"))
   private Theatre theatre;
 
   @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+  //@JoinTable(name="room_seat", joinColumns = @JoinColumn(name="room_id"), inverseJoinColumns = @JoinColumn(name="seat_id"))
   private Set<Seat> seats = new HashSet<>();
 
   public Room() {

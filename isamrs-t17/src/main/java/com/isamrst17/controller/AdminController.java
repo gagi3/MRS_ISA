@@ -1,5 +1,5 @@
 package com.isamrst17.controller;
 
-public class UserController {
+public class AdminController {
 
 }

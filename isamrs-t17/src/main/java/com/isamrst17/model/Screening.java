@@ -7,24 +7,27 @@ import java.util.Set;
 import javax.persistence.*;
 
 @Entity
+//@Table(name = "screening")
 public class Screening {
 
   @Id
   @GeneratedValue
+  //@Column(name="screening_id")
   private Long id;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+  //@JoinTable(name="screening_show", joinColumns = @JoinColumn(name="screening_id"), inverseJoinColumns = @JoinColumn(name="show_id"))
   private Show show;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+  //@JoinTable(name="screening_theatre", joinColumns = @JoinColumn(name="screening_id"), inverseJoinColumns = @JoinColumn(name="theatre_id"))
   private Theatre theatre;
 
+  //@Column(name="screening_date")
   private Date date;
 
   @OneToMany(mappedBy = "screening", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-  private Set<Rating> ratings = new HashSet<>();
-
-  @OneToMany(mappedBy = "screening", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+  //@JoinTable(name="screening_tickets", joinColumns = @JoinColumn(name="screening_id"), inverseJoinColumns = @JoinColumn(name="ticket_id"))
   private Set<Ticket> tickets = new HashSet<>();
 
   public Screening() {
@@ -60,14 +63,6 @@ public class Screening {
 
   public void setDate(Date date) {
     this.date = date;
-  }
-
-  public Set<Rating> getRatings() {
-    return ratings;
-  }
-
-  public void setRatings(Set<Rating> ratings) {
-    this.ratings = ratings;
   }
 
   public Set<Ticket> getTickets() {

@@ -38,8 +38,4 @@ public class UserService {
     return repository.findByUsername(username);
   }
 
-  public List<User> findByUserState(User.UserState userState) {
-    return repository.findByUserState(userState);
-  }
-
 }

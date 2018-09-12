@@ -8,8 +8,8 @@ import com.isamrst17.model.Theatre;
 public class ScreeningDTO {
 
   private Long id;
-  private ShowDTO show;
-  private TheatreDTO theatre;
+//  private ShowDTO show;
+//  private TheatreDTO theatre;
   private Date date;
 
   public ScreeningDTO() {
@@ -17,8 +17,8 @@ public class ScreeningDTO {
 
   public ScreeningDTO(Screening screening) {
     this.id = screening.getId();
-    this.show = new ShowDTO(screening.getShow());
-    this.theatre = new TheatreDTO(screening.getTheatre());
+//    this.show = new ShowDTO(screening.getShow());
+//    this.theatre = new TheatreDTO(screening.getTheatre());
     this.date = screening.getDate();
   }
 
@@ -30,21 +30,21 @@ public class ScreeningDTO {
     this.id = id;
   }
 
-  public ShowDTO getShow() {
-    return show;
-  }
-
-  public void setShow(ShowDTO show) {
-    this.show = show;
-  }
-
-  public TheatreDTO getTheatre() {
-    return theatre;
-  }
-
-  public void setTheatre(TheatreDTO theatre) {
-    this.theatre = theatre;
-  }
+//  public ShowDTO getShow() {
+//    return show;
+//  }
+//
+//  public void setShow(ShowDTO show) {
+//    this.show = show;
+//  }
+//
+//  public TheatreDTO getTheatre() {
+//    return theatre;
+//  }
+//
+//  public void setTheatre(TheatreDTO theatre) {
+//    this.theatre = theatre;
+//  }
 
   public Date getDate() {
     return date;

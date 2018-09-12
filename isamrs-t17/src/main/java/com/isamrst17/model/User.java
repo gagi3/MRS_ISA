@@ -1,32 +1,62 @@
 package com.isamrst17.model;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
-public class User {
-
-  public enum UserState {
-    Active, Reported, Blocked
-  };
+//@Table(name = "user")
+public class User extends Person {
 
   @Id
   @GeneratedValue
+  //@Column(name = "user_id")
   private Long id;
+  //@Column(name = "username")
   private String username;
+  //@Column(name = "password")
   private String password;
-  private Date registrationDate;
-  private UserState userState = UserState.Active;
+  @OneToOne
+  private Address address;
+  //@Column(name = "phoneNumber")
+  private String phoneNumber;
+  @OneToMany
+  private Set<Ticket> tickets = new HashSet<>();
+  
 
-//  @OneToMany(mappedBy = "user", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+  public User(String username, String password, Address address, String phoneNumber) {
+    this.username = username;
+    this.password = password;
+    this.address = address;
+    this.phoneNumber = phoneNumber;
+  }
+
+
+  public User() {
+  }
+
+  public Address getAddress() {
+    return address;
+  }
+
+  public void setAddress(Address address) {
+    this.address = address;
+  }
+
+  //  @OneToMany(mappedBy = "user", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 //  private Set<User> friends = new HashSet<>();
+
+  public Set<Ticket> getTickets() {
+    return tickets;
+  }
+
+  public void setTickets(Set<Ticket> tickets) {
+    this.tickets = tickets;
+  }
 
   public Long getId() {
     return id;
@@ -40,23 +70,20 @@ public class User {
   public void setUsername(String username) {
     this.username = username;
   }
-  public UserState getUserState() {
-    return userState;
-  }
-  public void setUserState(UserState userState) {
-    this.userState = userState;
-  }
   public String getPassword() {
     return password;
   }
   public void setPassword(String password) {
     this.password = password;
   }
-  public Date getRegistrationDate() {
-    return registrationDate;
-  }
-  public void setRegistrationDate(Date registrationDate) {
-    this.registrationDate = registrationDate;
-  }
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+	
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
 
 }

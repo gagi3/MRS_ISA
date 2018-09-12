@@ -16,8 +16,8 @@ public class SeatDTO {
 
   public SeatDTO(Seat seat) {
     this.id = seat.getId();
-    this.row = seat.getRow();
-    this.column = seat.getColumn();
+    this.row = seat.getSeatRow();
+    this.column = seat.getSeatColumn();
     this.segment = seat.getSegment();
     this.room = new RoomDTO(seat.getRoom());
   }
