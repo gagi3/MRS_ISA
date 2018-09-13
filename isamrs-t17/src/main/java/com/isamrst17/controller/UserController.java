@@ -34,31 +34,31 @@ public class UserController {
 	UserService userService;
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST, consumes = "application/json")
-	  public ResponseEntity<MessageDTO> register(@RequestBody RegisterDTO registerDTO) {
-	    MessageDTO messageDTO = new MessageDTO();
-	    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-	    User user = userService.findByUsername(registerDTO.getUsername());
-	    if (user != null) {
-	      messageDTO.setError("Username taken!");
-	      return new ResponseEntity<>(messageDTO, HttpStatus.CONFLICT);
-	    } else {
-	      User u = new User();
-	      Address a = new Address();
-	      a.setAddress(registerDTO.getAddress());
-	      City c = new City();
-	      c.setName(registerDTO.getCity());
-	      u.setFirstName(registerDTO.getFirstName());
-	      u.setLastName(registerDTO.getLastName());
-	      u.setUsername(registerDTO.getUsername());
-	      u.setPassword(encoder.encode(registerDTO.getPassword()));
-	      u.setPhoneNumber(registerDTO.getPhoneNumber());
-	      a.setCity(c);
-	      u.setAddress(a);
-	      c.getAddresses().add(a);
-	      cityService.save(c);
-	      addressService.save(a);
-	      userService.save(u);
-	    }
-	    return new ResponseEntity<>(messageDTO, HttpStatus.CREATED);
-	  }
+	public ResponseEntity<MessageDTO> register(@RequestBody RegisterDTO registerDTO) {
+		MessageDTO messageDTO = new MessageDTO();
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		User user = userService.findByUsername(registerDTO.getUsername());
+		if (user != null) {
+			messageDTO.setError("Username taken!");
+			return new ResponseEntity<>(messageDTO, HttpStatus.CONFLICT);
+		} else {
+			User u = new User();
+			Address a = new Address();
+			a.setAddress(registerDTO.getAddress());
+			City c = new City();
+			c.setName(registerDTO.getCity());
+			u.setFirstName(registerDTO.getFirstName());
+			u.setLastName(registerDTO.getLastName());
+			u.setUsername(registerDTO.getUsername());
+			u.setPassword(encoder.encode(registerDTO.getPassword()));
+			u.setPhoneNumber(registerDTO.getPhoneNumber());
+			a.setCity(c);
+			u.setAddress(a);
+			c.getAddresses().add(a);
+			cityService.save(c);
+			addressService.save(a);
+			userService.save(u);
+		}
+		return new ResponseEntity<>(messageDTO, HttpStatus.CREATED);
+	}
 }

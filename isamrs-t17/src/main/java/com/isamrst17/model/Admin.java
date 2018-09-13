@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 
 @Entity
-//@Table(name = "admin")
+@Table(name = "administrator")
 public abstract class Admin extends User {
 
   public enum Type {
