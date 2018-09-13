@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Theatrix | Register</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--===============================================================================================-->
+  <link rel="icon" type="image/png" href="images/icons/logo.png"/>
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+
+  <script src="js/jquery-3.3.1.js"></script>
+</head>
+<body>
+
+<div class="limiter">
+  <div class="container-login100">
+    <div class="wrap-login100">
+      <form id="registerForm" class="login100-form validate-form" action="#">
+        <span class="login100-form-title p-b-26">
+          Theatrix
+        </span>
+        <a  href="index.html">
+						<span class="logo100" id = pic>
+							<img src="images/icons/logo.png" height="52" width="52">
+						</span>
+        </a>
+        <span id="logintext" class="login100-form-text">
+						Register
+        </span>
+
+        <div class="wrap-input100">
+          <input id="firstName" class="input100" type="text" name="firstName" required title="First name">
+          <span class="focus-input100" data-placeholder="First name"></span>
+        </div>
+
+        <div class="wrap-input100">
+          <input id="lastName" class="input100" type="text" name="lastName" required title="Last name">
+          <span class="focus-input100" data-placeholder="Last name"></span>
+        </div>
+
+        <div class="wrap-input100">
+          <input id="usernameReg" class="input100" type="text" name="usernameReg" required title="Username">
+          <span class="focus-input100" data-placeholder="Username"></span>
+        </div>
+        
+        <div class="wrap-input100">
+          <input id="phoneNumber" class="input100" type="text" name="phoneNumber" required title="phoneNumber">
+          <span class="focus-input100" data-placeholder="Phone Number"></span>
+        </div>
+        
+        <div class="wrap-input100">
+          <input id="city" class="input100" type="text" name="city" required title="city">
+          <span class="focus-input100" data-placeholder="City"></span>
+        </div>
+        
+        <div class="wrap-input100">
+          <input id="address" class="input100" type="text" name="address" required title="address">
+          <span class="focus-input100" data-placeholder="Address"></span>
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate="Enter password">
+          <input id="passwordReg" class="input100" type="password" name="passwordReg" required title="Password">
+          <span class="focus-input100" data-placeholder="Password"></span>
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate="Enter password">
+          <input id="passwordRep" class="input100" type="password" name="passwordRep" required title="Repeat password">
+          <span class="focus-input100" data-placeholder="Repeat password"></span>
+        </div>
+        <script>
+          $('#passwordReg, #passwordRep').on('keyup', function () {
+          if ($('#passwordReg').val() == $('#passwordRep').val()) {
+          $('#message').html('Matching').css('color', 'green');
+          } else
+          $('#message').html('Not Matching').css('color', 'red');
+          });
+        </script>
+
+        <div class="container-login100-form-btn">
+          <div class="wrap-login100-form-btn">
+            <div class="login100-form-bgbtn"></div>
+            <button class="login100-form-btn" type="submit" id="submit">
+              Register
+            </button>
+          </div>
+        </div>
+
+        <div class="text-center p-t-115">
+						<span class="txt1">
+							Already have an account?
+						</span>
+
+          <a class="txt2" href="login.html">
+            Sign In
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  // register
+  $("#registerForm").submit(function(e) {
+	  debugger;
+    e.preventDefault();
+    var username = $("#usernameReg").val();
+    var password = $("#passwordReg").val();
+    var password2 = $("#passwordRep").val();
+    var firstName = $("#firstName").val();
+    var lastName = $("#lastName").val();
+    var phoneNumber = $('#phoneNumber').val();
+    var city = $('#city').val();
+	var address = $('#address').val();    
+
+    if (username.length == 0 || password.length == 0 || firstName.length == 0 || 
+    		lastName.length == 0 || password2.length == 0 || phoneNumber.length == 0 || city.length == 0 || address.length == 0) {
+      alert("All fields must be filled.");
+    } else if (password != password2) {
+      alert("Passwords don't match.");
+    } else {
+      var registerDTO = {
+        "username": username,
+        "password": password,
+        "firstName": firstName,
+        "lastName": lastName,
+        "phoneNumber": phoneNumber,
+        "address": address,
+        "city": city
+      };
+ 
+
+      $.ajax({
+        url: "http://localhost:8080/api/user/register",
+        type: "POST",
+        datatype: "json",
+        data: JSON.stringify(registerDTO),
+        contentType: "application/json",
+        success: function (data) {
+          $.ajax({
+            url: "http://localhost:8080/api/user/login",
+            type: "POST",
+            data: JSON.stringify({"username": username, "password": password}),
+            contentType: "application/json",
+            success: function (data) {
+              $.cookie('jwt', data.jwt, {path: '/'});
+              $.cookie('role', data.rola, {path: '/'});
+              location.reload();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            }
+          });
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          resp = $.parseJSON(xhr.responseText);
+          alert(resp.error);
+        }
+      });
+    }
+  });
+</script>
+
+
+<div id="dropDownSelect1"></div>
+
+<!--===============================================================================================-->
+<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+
+
+</body>
+</html>
