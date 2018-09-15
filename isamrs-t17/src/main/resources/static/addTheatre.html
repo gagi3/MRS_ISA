@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Theatrix | Add Play</title>
+  <title>Theatrix | Add Movie</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!--===============================================================================================-->
@@ -128,7 +128,7 @@
                     </a>
                     <a href="index.html" id="site-name" name="sitename">
                       <span class="topbar100-form-title">
-                          Theatrix | Add Play
+                          Theatrix | Cinemas
                       </span>
                     </a>
                     <div id="buttons">
@@ -175,45 +175,30 @@
             <div class="content100-form">
 
               <div id="adder">
-                <form id="addMovieForm" class="add100-form validate-form" action="#">
+                <form id="addTheatreForm" class="add100-form validate-form" action="#">
 
                   <span id="logintext" class="login100-form-text">
-                    Add a play
+                    Add a movie
                   </span>
 
                   <div class="wrap-input100">
-                    <input id="playName" class="input100" type="text" name="playName" required title="Movie name">
-                    <span class="focus-input100" data-placeholder="Movie name"></span>
+                    <input id="theatreName" class="input100" type="text" name="theatreName" required title="Theatre name">
+                    <span class="focus-input100" data-placeholder="Theatre name"></span>
                   </div>
 
                   <div class="wrap-input100">
-                    <input id="actor1" class="input100" type="text" name="actor" required title="Actor (1)">
-                    <span class="focus-input100" data-placeholder="Actor (1)"></span>
+                    <input id="type" class="input100" type="text" name="type" required title="Type">
+                    <span class="focus-input100" data-placeholder="Type (CINEMA/PLAYHOUSE)"></span>
                   </div>
 
                   <div class="wrap-input100">
-                    <input id="actor2" class="input100" type="text" name="actor" required title="Actor (2)">
-                    <span class="focus-input100" data-placeholder="Actor (2)"></span>
+                    <input id="address" class="input100" type="text" name="address" required title="Address">
+                    <span class="focus-input100" data-placeholder="Address"></span>
                   </div>
 
                   <div class="wrap-input100">
-                    <input id="actor3" class="input100" type="text" name="actor" required title="Actor (3)">
-                    <span class="focus-input100" data-placeholder="Actor (3)"></span>
-                  </div>
-
-                  <div class="wrap-input100">
-                    <input id="genre" class="input100" type="text" name="genre" required title="Genre">
-                    <span class="focus-input100" data-placeholder="Genre"></span>
-                  </div>
-
-                  <div class="wrap-input100">
-                    <input id="director" class="input100" type="text" name="director" required title="Director">
-                    <span class="focus-input100" data-placeholder="Director"></span>
-                  </div>
-
-                  <div class="wrap-input100">
-                    <input id="length" class="input100" type="number" name="length" required title="Length">
-                    <span class="focus-input100" data-placeholder="Length"></span>
+                    <input id="city" class="input100" type="text" name="city" required title="City">
+                    <span class="focus-input100" data-placeholder="City"></span>
                   </div>
 
                   <div class="wrap-input100">
@@ -250,6 +235,6 @@
 <script src="js/common.js"></script>
 <script src="js/jquery.cookie.js"></script>
 <script src="js/custom/main.js"></script>
-<script src="js/custom/play.js"></script>
+<script src="js/custom/theatre.js"></script>
 </body>
 </html>

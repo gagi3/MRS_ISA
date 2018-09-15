@@ -1,17 +1,47 @@
-// Get all theatres
+$("#addTheatreForm").submit(function(e) {
+  debugger;
+  e.preventDefault();
+  var theatreName = $("#theatreName").val();
+  var type = $("#type").val();
+  var address = $("#address").val();
+  var city = $("#city").val();
+  var description = $('#description').val();
 
-// $('.card-wrapper').ready(function() {
-//   $.ajax({
-//     url: "http://localhost:8080/api/user/theatres/all",
-//     type: "GET",
-//     headers: {"Authorization": localStorage.jwt},
-//     success: function(data) {
-//       $('.card-wrapper').append(data);
-//     }
-//   })
-// });
+  if (theatreName.length == 0 || type.length == 0 || address.length == 0 || city.length == 0 || description.length == 0) {
+    alert("All fields must be filled.");
+  } else {
+    var showDTO = {
+      "id": "1",
+      "name": theatreName,
+      "address": {
+        "id" : "1",
+        "address" : address,
+        "city" : city
+      },
+      "desc": description,
+      "theatreType": type,
+      "rating": "0.0",
+    };
 
-// Get all theatres 2
+    var username = localStorage.getItem('loggedIn');
+
+
+    $.ajax({
+      url: "http://localhost:8080/api/theatre/theatres/add/"+username,
+      type: "POST",
+      datatype: "json",
+      data: JSON.stringify(showDTO),
+      contentType: "application/json",
+      success: function (data) {
+        window.location.href = "http://localhost:8080/theatres.html";
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        resp = $.parseJSON(xhr.responseText);
+        alert(resp.error);
+      }
+    });
+  }
+});
 
 function getStars(rating) {
   debugger;
