@@ -41,8 +41,8 @@
 	top: 5%;
 	width: 600px;
 	height: 80%;
-	background: #192f4c;
 	color: white;
+	border: 5px solid gray;
 }
 
 #user-info input {
@@ -57,7 +57,6 @@
 	left: 10px;
 	text-align: center;
 	font-size: 20px;
-	color: white;
 }
 
 

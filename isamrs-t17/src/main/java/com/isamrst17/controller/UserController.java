@@ -161,5 +161,5 @@ public class UserController {
 	public Boolean loginCheck(@PathVariable String username) {
 		User user = userService.findByUsername(username);
 		return userService.findAll().contains(user);
- }
+	}
 }
