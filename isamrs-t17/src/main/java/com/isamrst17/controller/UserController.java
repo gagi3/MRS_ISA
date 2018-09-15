@@ -120,8 +120,8 @@ public class UserController {
 	      User user = userService.findByUsername(details.getUsername());
 	      System.out.println(user.getUsername());
 	      MessageDTO m = new MessageDTO();
-	      
-	      if (user.getActive()) {
+
+	      if (!user.getActive()) {
 	    	  m.setError("User not active");
 	    	  return new ResponseEntity<>(m, HttpStatus.BAD_REQUEST);
 	      }
@@ -137,6 +137,7 @@ public class UserController {
 	    } catch (Exception e) {
 	      MessageDTO m = new MessageDTO();
 	      m.setError("Wrong username/password!");
+	      e.printStackTrace();
 	      return new ResponseEntity<>(m, HttpStatus.NOT_FOUND);
 	    }
 	  }
