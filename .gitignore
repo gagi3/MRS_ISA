@@ -16,6 +16,8 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+isamrs-t17/src/main/resources/application.properties
+
 
 # External tool builders
 .externalToolBuilders/

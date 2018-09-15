@@ -24,6 +24,7 @@ public class User extends Person {
   private Address address;
   //@Column(name = "phoneNumber")
   private String phoneNumber;
+  private Boolean active;
   @OneToMany
   private Set<Ticket> tickets = new HashSet<>();
   
@@ -83,6 +84,16 @@ public class User extends Person {
 	
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+
+	public Boolean getActive() {
+		return active;
+	}
+
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 
