@@ -25,6 +25,7 @@ public class User extends Person {
   //@Column(name = "phoneNumber")
   private String phoneNumber;
   private Boolean active;
+  private String link;
   @OneToMany
   private Set<Ticket> tickets = new HashSet<>();
   
@@ -94,6 +95,16 @@ public class User extends Person {
 
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+
+
+	public String getLink() {
+		return link;
+	}
+
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 
 

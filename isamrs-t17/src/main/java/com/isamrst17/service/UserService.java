@@ -25,6 +25,10 @@ public class UserService {
   public Page<User> findAll(Pageable page) {
     return repository.findAll(page);
   }
+  
+  public User findByLink(String link) {
+	  return repository.findByLink(link);
+  }
 
   public User save(User user) {
     return repository.save(user);

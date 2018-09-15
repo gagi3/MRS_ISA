@@ -58,8 +58,8 @@
         </div>
 
         <div class="wrap-input100">
-          <input id="usernameReg" class="input100" type="text" name="usernameReg" required title="Username">
-          <span class="focus-input100" data-placeholder="Username"></span>
+          <input id="usernameReg" class="input100" type="email" name="usernameReg" required title="Email">
+          <span class="focus-input100" data-placeholder="Email"></span>
         </div>
         
         <div class="wrap-input100">
@@ -120,6 +120,8 @@
 
 <script>
   // register
+  var emailRegex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
   $("#registerForm").submit(function(e) {
 	  debugger;
     e.preventDefault();
@@ -132,12 +134,15 @@
     var city = $('#city').val();
 	var address = $('#address').val();    
 
-    if (username.length == 0 || password.length == 0 || firstName.length == 0 || 
-    		lastName.length == 0 || password2.length == 0 || phoneNumber.length == 0 || city.length == 0 || address.length == 0) {
+    if (username.length == 0 || password.length == 0 || firstName.length == 0  || phoneNumber.length == 0 || city.length == 0 || address.length == 0) {
       alert("All fields must be filled.");
     } else if (password != password2) {
       alert("Passwords don't match.");
-    } else {
+    } else if(password.length < 8) {
+    	alert("Password must contain at least 8 characters.");
+    } /*else if(!emailRegex.test(String(email).toLowerCase())) {     Regularan izraz za proveru Email adrese
+		alert("Neispravna email adresa!");
+    }*/ else {
       var registerDTO = {
         "username": username,
         "password": password,
@@ -156,7 +161,7 @@
         data: JSON.stringify(registerDTO),
         contentType: "application/json",
         success: function (data) {
-        	window.location.href = "http://localhost:8080/index.html";
+        	window.location.href = "http://localhost:8080/login.html";
           /* $.ajax({
             url: "http://localhost:8080/api/user/login",
             type: "POST",
