@@ -38,16 +38,14 @@ public class ShowController {
   @Autowired
   public ShowService showService;
 
-  @RequestMapping(value = "/movie/add", method = RequestMethod.POST)
-  public ResponseEntity<MessageDTO> addMovie(@RequestBody ShowDTO showDTO) {
+  @RequestMapping(value = "/movie/add/{username}", method = RequestMethod.POST)
+  public ResponseEntity<MessageDTO> addMovie(@RequestBody ShowDTO showDTO, @PathVariable String username) {
     MessageDTO messageDTO = new MessageDTO();
-//    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//    String username = auth.getName(); //get logged in username
-//    Admin u = adminService.findByUsername(username);
-//    if (!(u instanceof TheatreAdmin)) {
-//      messageDTO.setError("Only theatre admins are allowed to add shows.");
-//      return new ResponseEntity<>(messageDTO, HttpStatus.UNAUTHORIZED);
-//    }
+    Admin u = adminService.findByUsername(username);
+    if (!(u instanceof TheatreAdmin)) {
+      messageDTO.setError("Only theatre admins are allowed to add shows.");
+      return new ResponseEntity<>(messageDTO, HttpStatus.UNAUTHORIZED);
+    }
     Show show = new Show();
     System.out.println(showDTO);
     Show show1 = showService.find(showDTO.getId());
@@ -67,11 +65,9 @@ public class ShowController {
     return new ResponseEntity<>(messageDTO, HttpStatus.CREATED);
   }
 
-  @RequestMapping(value = "/play/add", method = RequestMethod.POST)
-  public ResponseEntity<MessageDTO> addPlay(@RequestBody ShowDTO showDTO) {
+  @RequestMapping(value = "/play/add/{username}", method = RequestMethod.POST)
+  public ResponseEntity<MessageDTO> addPlay(@RequestBody ShowDTO showDTO, @PathVariable String username) {
     MessageDTO messageDTO = new MessageDTO();
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    String username = auth.getName(); //get logged in username
     Admin u = adminService.findByUsername(username);
     if (!(u instanceof TheatreAdmin)) {
       messageDTO.setError("Only theatre admins are allowed to add shows.");

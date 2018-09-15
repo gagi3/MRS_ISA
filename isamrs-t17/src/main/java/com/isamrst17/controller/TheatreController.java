@@ -94,7 +94,7 @@ public class TheatreController {
     return new ResponseEntity<>(showDTO, HttpStatus.OK);
   }
 
-  @RequestMapping(value = "/screening/{theatreID}", method = RequestMethod.GET)
+  @RequestMapping(value = "/screenings/{theatreID}", method = RequestMethod.GET)
   public ResponseEntity<List<ScreeningDTO>> getTheatreScreenings(@PathVariable Long theatreID){
     Theatre theatre = theatreService.find(theatreID);
     List<ScreeningDTO> screeningDTO = new ArrayList<>();

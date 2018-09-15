@@ -154,8 +154,8 @@ public class UserController {
 	
 	//Login check
 	@RequestMapping(value = "/login/check/{username}", method = RequestMethod.GET)
-	  public Boolean loginCheck(@PathVariable String username) {
-	    User user = userService.findByUsername(username);
-	    return userService.findAll().contains(user);
-	 }
+	public Boolean loginCheck(@PathVariable String username) {
+		User user = userService.findByUsername(username);
+		return userService.findAll().contains(user);
+ }
 }
