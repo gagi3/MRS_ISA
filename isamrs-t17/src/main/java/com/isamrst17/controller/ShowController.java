@@ -8,10 +8,14 @@ import com.isamrst17.model.Show;
 import com.isamrst17.model.Show.ShowType;
 import com.isamrst17.model.Theatre;
 import com.isamrst17.model.TheatreAdmin;
+import com.isamrst17.model.Ticket;
 import com.isamrst17.service.AdminService;
+import com.isamrst17.service.ScreeningService;
 import com.isamrst17.service.ShowService;
 import com.isamrst17.service.TheatreService;
+import com.isamrst17.service.TicketService;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +41,12 @@ public class ShowController {
 
   @Autowired
   public ShowService showService;
+
+  @Autowired
+  public ScreeningService screeningService;
+
+  @Autowired
+  public TicketService ticketService;
 
   @RequestMapping(value = "/movie/add/{username}", method = RequestMethod.POST)
   public ResponseEntity<MessageDTO> addMovie(@RequestBody ShowDTO showDTO, @PathVariable String username) {
@@ -89,6 +99,75 @@ public class ShowController {
       showService.save(show);
     }
     return new ResponseEntity<>(messageDTO, HttpStatus.CREATED);
+  }
+
+  @RequestMapping(value = "/view/{username}/{showID}", method = RequestMethod.GET)
+  public ResponseEntity<ShowDTO> viewShow(@PathVariable String username, @PathVariable Long showID) {
+    Admin u = adminService.findByUsername(username);
+    if (!(u instanceof TheatreAdmin)) {
+      return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+    Show show = showService.find(showID);
+    if (!showService.findAll().contains(show)) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    } else {
+      return new ResponseEntity<>(new ShowDTO(show), HttpStatus.OK);
+    }
+  }
+
+  @RequestMapping(value = "/edit/{username}", method = RequestMethod.POST)
+  public ResponseEntity<MessageDTO> editShow(@RequestBody ShowDTO showDTO, @PathVariable String username) {
+    MessageDTO messageDTO = new MessageDTO();
+    Admin u = adminService.findByUsername(username);
+    if (!(u instanceof TheatreAdmin)) {
+      messageDTO.setError("Only theatre admins are allowed to edit shows.");
+      return new ResponseEntity<>(messageDTO, HttpStatus.UNAUTHORIZED);
+    }
+    Show show = showService.find(showDTO.getId());
+    if (!showService.findAll().contains(show)) {
+      messageDTO.setError("Show with this ID doesn't exist!");
+      return new ResponseEntity<>(messageDTO, HttpStatus.CONFLICT);
+    } else {
+      if (!showDTO.getName().isEmpty()) show.setShowName(showDTO.getName());
+      if (!showDTO.getDesc().isEmpty()) show.setShowDesc(showDTO.getDesc());
+      if (!showDTO.getGenre().isEmpty()) show.setGenre(showDTO.getGenre());
+      if (!showDTO.getDirector().isEmpty()) show.setDirector(showDTO.getDirector());
+      if (!showDTO.getActors().isEmpty()) show.setActors(showDTO.getActors());
+      if (showDTO.getLength() > 0) show.setLength(showDTO.getLength());
+      showService.save(show);
+    }
+    return new ResponseEntity<>(messageDTO, HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "/delete/{username}/{showID}", method = RequestMethod.DELETE)
+  public ResponseEntity<MessageDTO> deleteShow(@PathVariable String username, @PathVariable Long showID) {
+    MessageDTO messageDTO = new MessageDTO();
+    Admin u = adminService.findByUsername(username);
+    if (!(u instanceof TheatreAdmin)) {
+      messageDTO.setError("Only theatre admins are allowed to delete shows.");
+      return new ResponseEntity<>(messageDTO, HttpStatus.UNAUTHORIZED);
+    }
+    Show show = showService.find(showID);
+    if (!showService.findAll().contains(show)) {
+      messageDTO.setError("Show doesn't exist.");
+      return new ResponseEntity<>(messageDTO, HttpStatus.NOT_FOUND);
+    }
+    for (Screening screening : show.getScreenings()) {
+      for (Ticket ticket : screening.getTickets()) {
+        if (ticket.isSold()) {
+          messageDTO.setError("Ticket(s) for this show have already been sold.");
+          return new ResponseEntity<>(messageDTO, HttpStatus.CONFLICT);
+        }
+      }
+    }
+    for (Screening screening : show.getScreenings()) {
+      for (Ticket ticket : screening.getTickets()) {
+        ticketService.remove(ticket.getId());
+      }
+      screeningService.remove(screening.getId());
+    }
+    showService.remove(show.getId());
+    return new ResponseEntity<>(messageDTO, HttpStatus.OK);
   }
 
   @RequestMapping(value = "/movies", method = RequestMethod.GET)

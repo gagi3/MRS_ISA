@@ -1,5 +1,6 @@
 package com.isamrst17.controller;
 
+import com.isamrst17.model.SystemAdmin;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -120,7 +121,9 @@ public class UserController {
 	      User user = userService.findByUsername(details.getUsername());
 	      System.out.println(user.getUsername());
 	      MessageDTO m = new MessageDTO();
-
+        if (user instanceof SystemAdmin) {
+          user.setActive(Boolean.TRUE);
+        }
 	      if (!user.getActive()) {
 	    	  m.setError("User not active");
 	    	  return new ResponseEntity<>(m, HttpStatus.BAD_REQUEST);

@@ -104,4 +104,6 @@ public class TheatreController {
     return new ResponseEntity<>(screeningDTO, HttpStatus.OK);
   }
 
+
+
 }
