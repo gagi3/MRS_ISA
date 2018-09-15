@@ -43,7 +43,7 @@ function getStars(rating) {
 $('.card-wrapper').ready(function() {
   debugger;
   $.ajax({
-    url: "http://localhost:8080/api/user/playhouses",
+    url: "http://localhost:8080/api/theatre/playhouses",
     type: "GET",
     // headers: {"Authorization": localStorage.jwt},
     success: function(data) {
