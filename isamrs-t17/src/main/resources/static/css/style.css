@@ -1,0 +1,160 @@
+::selection {
+    background-color: #313435;
+}
+
+::-moz-selection {
+    background-color: #313435;
+}
+
+.container {
+    display: -webkit-flex;
+    display: flex;
+    height: 100%;
+}
+
+#logbox {
+
+    padding: 10px;
+    margin: 120px auto;
+    width: 340px;
+    background-color: #fff;
+    -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+}
+
+h1 {
+    text-align: center;
+    font-size: 175%;
+    color: #757575;
+    font-weight: 300;
+}
+
+h1, input {
+    font-family: "Open Sans", Helvetica, sans-serif;
+}
+
+.input {
+    width: 75%;
+    height: 50px;
+    display: block;
+    margin: 0 auto 15px;
+    padding: 0 15px;
+    border: none;
+    border-bottom: 2px solid #ebebeb;
+}
+.input:focus {
+    outline: none;
+    border-bottom-color: #313435 !important;
+}
+.input:hover {
+    border-bottom-color: #dcdcdc;
+}
+.input:invalid {
+    box-shadow: none;
+}
+
+.inputButton {
+    position: relative;
+    width: 85%;
+    height: 50px;
+    display: block;
+    margin: 30px auto 30px;
+    color: white;
+    background-color: #313435;
+    border: none;
+    -webkit-box-shadow: 0 5px 0 #313435;
+    -moz-box-shadow: 0 5px 0 #313435;
+    box-shadow: 0 5px 0 #313435;
+}
+.inputButton:hover {
+    top: 2px;
+    -webkit-box-shadow: 0 3px 0 #313435;
+    -moz-box-shadow: 0 3px 0 #313435;
+    box-shadow: 0 3px 0 #313435;
+}
+.inputButton:active {
+    top: 5px;
+    box-shadow: none;
+}
+.inputButton:focus {
+    outline: none;
+}
+
+.rekvizitiGrid {
+  margin-top:15px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+#ponude {
+    overflow-y: auto;
+    max-height:450px;
+    margin-bottom:30px;
+}
+
+.notifikacijaPonude{
+	border-style: solid;
+	border-color: #29927d;
+    border-width: 2px;
+}
+
+.notifikacijaObrisiDugme {
+	
+}
+
+#prikazRezervacija{
+	display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.rezRekvizita{
+	border-style: solid;
+	border-color: #29927d;
+    border-width: 2px;
+    margin-bottom:30px;
+}
+
+.elemOkvir{
+	border-style: solid;
+	border-color: #29927d;
+    border-width: 2px;
+}
+
+.ponudaOkvir{
+	border-style: solid;
+	border-color: #29927d;
+    border-width: 2px;
+    max-width:350px;
+    margin-bottom:10px;
+}
+
+.dugacak_tekst {
+	max-height: 7em;
+    line-height: 1em;
+    overflow: auto;
+}
+
+.vrlo_dugacak_tekst {
+	max-height: 10em;
+    line-height: 1em;
+    overflow: auto;
+}
+
+.centrirana_slika {
+    border: none;
+    display: block;
+    margin: 0 auto;
+}
+
+.rezRekvLabela{
+	font-size: 20px;
+	border-style: solid;
+	border-color: #29927d;
+    border-width: 2px;
+}
+
+

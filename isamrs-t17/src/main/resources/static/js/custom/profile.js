@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    console.log(localStorage.getItem('loggedIn'));
     var usrnm = localStorage.getItem('loggedIn');
     
     $.ajax({
@@ -7,30 +6,17 @@ $(document).ready(function() {
       type: "GET",
       headers: {"Authorization": localStorage.jwt},
       success: function(data) {
-        console.log('success');
+    	  
+        console.log(usrnm, 'success');
       }
     });
     
     $.ajax({
-	    url: "http://localhost:8080/api/profile/show/"+usrnm,
+	    url: "http://localhost:8080/api/user/show/"+usrnm,
 	    type: "GET",
 	    success: function(data) {
 	    	console.log('This part is not executed');
 	    }
     })
+    
  });
-
-/*$(document).ready(function () {
-
-	
-	var usrnm = localStorage.getItem('loggedIn'); 
-	
-	$.ajax({
-		type: "GET",
-		url : "http://localhost:8080/api/profil/show" + usrnm,
-		success(function(data) {
-			
-				
-		})
-	})
-})*/
