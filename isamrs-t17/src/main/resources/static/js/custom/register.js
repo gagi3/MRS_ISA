@@ -1,7 +1,4 @@
-/**
- * 
- */
-var emailRegex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+//var emailRegex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
   $("#registerForm").submit(function(e) {
 	  debugger;
@@ -13,13 +10,17 @@ var emailRegex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\")
     var lastName = $("#lastName").val();
     var phoneNumber = $('#phoneNumber').val();
     var city = $('#city').val();
-	var address = $('#address').val();    
+	var address = $('#address').val();  
 
+	var isnum = /^\d+$/.test(phoneNumber);
+	
     if (username.length == 0 || password.length == 0 || firstName.length == 0  || phoneNumber.length == 0 || city.length == 0 || address.length == 0) {
       alert("All fields must be filled.");
     } else if (password != password2) {
       alert("Passwords don't match.");
-    } else if(password.length < 8) {
+    } else if(!isnum) {
+    	alert("Phone Number can contain only numbers");
+    }else if(password.length < 8) {
     	alert("Password must contain at least 8 characters.");
     } /*else if(!emailRegex.test(String(email).toLowerCase())) {     Regularan izraz za proveru Email adrese
 		alert("Neispravna email adresa!");
