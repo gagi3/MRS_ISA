@@ -4,12 +4,14 @@ import java.util.Date;
 import com.isamrst17.model.Screening;
 import com.isamrst17.model.Show;
 import com.isamrst17.model.Theatre;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class ScreeningDTO {
 
   private Long id;
 //  private ShowDTO show;
 //  private TheatreDTO theatre;
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
   private Date date;
 
   public ScreeningDTO() {

@@ -1,14 +1,17 @@
 package com.isamrst17.controller;
 
+import com.isamrst17.dto.BusinessReportDTO;
 import com.isamrst17.dto.CityDTO;
 import com.isamrst17.dto.MessageDTO;
 import com.isamrst17.dto.RoomDTO;
 import com.isamrst17.dto.ScreeningDTO;
 import com.isamrst17.dto.ShowDTO;
 import com.isamrst17.dto.TheatreDTO;
+import com.isamrst17.dto.TicketDTO;
 import com.isamrst17.model.Address;
 import com.isamrst17.model.Admin;
 import com.isamrst17.model.City;
+import com.isamrst17.model.Rating;
 import com.isamrst17.model.Room;
 import com.isamrst17.model.Screening;
 import com.isamrst17.model.Seat;
@@ -20,6 +23,8 @@ import com.isamrst17.model.Theatre;
 import com.isamrst17.model.Theatre.TheatreType;
 import com.isamrst17.model.TheatreAdmin;
 import com.isamrst17.model.Ticket;
+import com.isamrst17.model.Ticket.Type;
+import com.isamrst17.model.User;
 import com.isamrst17.service.AddressService;
 import com.isamrst17.service.AdminService;
 import com.isamrst17.service.CityService;
@@ -29,8 +34,11 @@ import com.isamrst17.service.SeatService;
 import com.isamrst17.service.ShowService;
 import com.isamrst17.service.TheatreService;
 import com.isamrst17.service.TicketService;
+import com.isamrst17.service.UserService;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +73,9 @@ public class TheatreController {
 
   @Autowired
   private SeatService seatService;
+
+  @Autowired
+  private UserService userService;
 
   @Autowired
   private AddressService addressService;
@@ -202,6 +213,71 @@ public class TheatreController {
     return new ResponseEntity<>(messageDTO, HttpStatus.OK);
   }
 
+  @RequestMapping(value = "/tickets/set/discount/{username}/{ticketID}/{discount}", method = RequestMethod.POST)
+  public ResponseEntity<MessageDTO> setDiscount(@PathVariable String username, @PathVariable Long ticketID, @PathVariable Double discount) {
+    MessageDTO messageDTO = new MessageDTO();
+    Admin u = adminService.findByUsername(username);
+    if (!(u instanceof TheatreAdmin)) {
+      messageDTO.setError("Only theatre admins are allowed to set discounted tickets.");
+      return new ResponseEntity<>(messageDTO, HttpStatus.UNAUTHORIZED);
+    }
+    Ticket t = ticketService.find(ticketID);
+    if (!ticketService.findAll().contains(t)) {
+      messageDTO.setError("Ticket with this ID doesn't exist!");
+      return new ResponseEntity<>(messageDTO, HttpStatus.CONFLICT);
+    } else {
+      t.setType(Ticket.Type.Discounted);
+      t.setPrice(t.getPrice() - discount);
+      ticketService.save(t);
+    }
+    return new ResponseEntity<>(messageDTO, HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "tickets/discounted/{username}/{theatreID}", method = RequestMethod.GET)
+  public ResponseEntity<List<TicketDTO>> getDiscountedTickets(@PathVariable String username, @PathVariable Long theatreID) {
+    List<TicketDTO> tickets = new ArrayList<>();
+    User u = userService.findByUsername(username);
+    if (!userService.findAll().contains(u)) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    Theatre t = theatreService.find(theatreID);
+    if (!theatreService.findAll().contains(t)) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    for (Screening s : t.getScreenings()) {
+      for (Ticket ticket : s.getTickets()) {
+        if (ticket.getType().equals(Type.Discounted)) {
+          tickets.add(new TicketDTO(ticket));
+        }
+      }
+    }
+    return new ResponseEntity<>(tickets, HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "tickets/discounted/reserve/{username}/{ticketID}", method = RequestMethod.POST)
+  public ResponseEntity<MessageDTO> reserveDiscountedTicket(@PathVariable String username, @PathVariable Long ticketID) {
+    MessageDTO messageDTO = new MessageDTO();
+    User u = userService.findByUsername(username);
+    if (!userService.findAll().contains(u)) {
+      messageDTO.setError("User not found!");
+      return new ResponseEntity<>(messageDTO, HttpStatus.NOT_FOUND);
+    }
+    Ticket t = ticketService.find(ticketID);
+    if (!ticketService.findAll().contains(t) || t.isSold()) {
+      messageDTO.setError("Ticket not found!");
+      return new ResponseEntity<>(messageDTO, HttpStatus.NOT_FOUND);
+    }
+    if (t.getType().equals(Type.Regular)) {
+      messageDTO.setError("Regular ticket can not be quick-reserved!");
+      return new ResponseEntity<>(messageDTO, HttpStatus.CONFLICT);
+    }
+    t.setSold(true);
+    u.getTickets().add(t);
+    ticketService.save(t);
+    userService.save(u);
+    return new ResponseEntity<>(messageDTO, HttpStatus.OK);
+  }
+
   @RequestMapping(value = "/theatres/add/{username}", method = RequestMethod.POST, consumes = "application/json")
   public ResponseEntity<MessageDTO> addTheatre(@RequestBody TheatreDTO theatreDTO, @PathVariable String username) {
     MessageDTO messageDTO = new MessageDTO();
@@ -299,6 +375,144 @@ public class TheatreController {
     }
     roomService.save(room);
     return new ResponseEntity<>(messageDTO, HttpStatus.CREATED);
+  }
+
+
+
+  // Business reports.
+
+  @RequestMapping(value = "/theatres/business-report/interval/{username}{theatreID}", method = RequestMethod.GET)
+  public ResponseEntity<BusinessReportDTO> businessReport(@PathVariable String username, @PathVariable Long theatreID, @RequestBody Date startDate, @RequestBody Date endDate) {
+    MessageDTO messageDTO = new MessageDTO();
+    Admin u = adminService.findByUsername(username);
+    if (!(u instanceof TheatreAdmin)) {
+      messageDTO.setError("Only theatre admins are allowed to see the business report.");
+      return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+    Theatre theatre = theatreService.find(theatreID);
+    BusinessReportDTO businessReportDTO = new BusinessReportDTO();
+    Double sales = 0.0;
+    Integer sold = 0;
+    Double showRating = 0.0;
+    Double theatreRating = 0.0;
+    if (!theatreService.findAll().contains(theatre)) {
+      messageDTO.setError("Theatre doesn't exist!");
+      return new ResponseEntity<>(HttpStatus.CONFLICT);
+    } else {
+      for (Screening screening : theatre.getScreenings()) {
+        if (screening.getDate().before(startDate) || screening.getDate().after(endDate)) {
+//          messageDTO.setError("There are no screenings in the selected time period.");
+//          return new ResponseEntity<>(HttpStatus.CONFLICT);
+          sales = 0.0;
+        } else {
+          if (screening.getTickets().isEmpty()) {
+//            messageDTO.setError("No tickets were sold in the selected time period.");
+//            return new ResponseEntity<>(HttpStatus.CONFLICT);
+            sold = 0;
+          } else {
+            for (Ticket ticket : screening.getTickets()) {
+              if (ticket.isSold()) {
+                sales += ticket.getPrice();
+                sold += 1;
+              }
+            }
+          }
+        }
+        for (Rating rating : screening.getShow().getRatings()) {
+          showRating += rating.getRating().getValue();
+        }
+        showRating = showRating/screening.getShow().getRatings().size();
+        businessReportDTO.getShowRatings().put(new ShowDTO(screening.getShow()), showRating);
+      }
+      for (Rating rating : theatre.getRatings()) {
+        theatreRating += rating.getRating().getValue();
+      }
+      theatreRating = theatreRating/theatre.getRatings().size();
+    }
+    businessReportDTO.setSales(sales);
+    businessReportDTO.setSold(sold);
+    businessReportDTO.setTheatreRating(theatreRating);
+    return new ResponseEntity<>(businessReportDTO, HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "/theatres/business-report/monthly/{username}/{theatreID}", method = RequestMethod.GET)
+  public ResponseEntity businessReportMonthly(@PathVariable String username, @PathVariable Long theatreID) {
+    MessageDTO messageDTO = new MessageDTO();
+    Admin u = adminService.findByUsername(username);
+    if (!(u instanceof TheatreAdmin)) {
+      messageDTO.setError("Only theatre admins are allowed to see the business report.");
+      return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+    HashMap<Integer, BusinessReportDTO> businessReportDTOHashMap = new HashMap<>();
+    Calendar c = Calendar.getInstance();
+    c.set(Calendar.YEAR, 2018);
+    c.set(Calendar.MONTH, 0);
+    for (int i = 0; i < 12; i++) {
+      int start = 1;
+      int end = c.getActualMaximum(Calendar.DAY_OF_MONTH);
+      c.set(Calendar.DAY_OF_MONTH, start);
+      Date startDate = c.getTime();
+      c.set(Calendar.DATE, end);
+      Date endDate = c.getTime();
+      BusinessReportDTO businessReportDTO = businessReport(username, theatreID, startDate, endDate).getBody();
+      businessReportDTOHashMap.put(i+1, businessReportDTO);
+      c.add(Calendar.MONTH, 1);
+    }
+    return new ResponseEntity<>(businessReportDTOHashMap, HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "/theatres/business-report/weekly/{username}/{theatreID}", method = RequestMethod.GET)
+  public ResponseEntity businessReportWeekly(@PathVariable String username, @PathVariable Long theatreID) {
+    MessageDTO messageDTO = new MessageDTO();
+    Admin u = adminService.findByUsername(username);
+    if (!(u instanceof TheatreAdmin)) {
+      messageDTO.setError("Only theatre admins are allowed to see the business report.");
+      return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+    HashMap<Integer, BusinessReportDTO> businessReportDTOHashMap = new HashMap<>();
+    Calendar c = Calendar.getInstance();
+    c.set(Calendar.YEAR, 2018);
+    c.set(Calendar.MONTH, 0);
+    c.set(Calendar.WEEK_OF_YEAR, 0);
+    for (int i = 0; i < 52; i++) {
+      c.add(Calendar.WEEK_OF_YEAR, 1);
+      int start = c.getActualMinimum(Calendar.DAY_OF_WEEK);
+      int end = c.getActualMaximum(Calendar.DAY_OF_WEEK);
+      c.set(Calendar.DATE, start+i*7);
+      Date startDate = c.getTime();
+      c.set(Calendar.DATE, end+i*7);
+      Date endDate = c.getTime();
+      BusinessReportDTO businessReportDTO = businessReport(username, theatreID, startDate, endDate).getBody();
+      businessReportDTOHashMap.put(i+1, businessReportDTO);
+    }
+    return new ResponseEntity<>(businessReportDTOHashMap, HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "/theatres/business-report/daily/{username}/{theatreID}", method = RequestMethod.GET)
+  public ResponseEntity businessReportDaily(@PathVariable String username, @PathVariable Long theatreID) {
+    MessageDTO messageDTO = new MessageDTO();
+    Admin u = adminService.findByUsername(username);
+    if (!(u instanceof TheatreAdmin)) {
+      messageDTO.setError("Only theatre admins are allowed to see the business report.");
+      return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+    HashMap<Integer, BusinessReportDTO> businessReportDTOHashMap = new HashMap<>();
+    Calendar c = Calendar.getInstance();
+    c.set(Calendar.YEAR, 2018);
+    c.set(Calendar.MONTH, 0);
+    c.set(Calendar.DAY_OF_YEAR, 1);
+    for (int i = 0; i < 365; i++) {
+      c.set(Calendar.HOUR_OF_DAY, 0);
+      c.set(Calendar.MINUTE, 0);
+      Date startDate = c.getTime();
+      c.set(Calendar.HOUR_OF_DAY, 23);
+      c.set(Calendar.MINUTE, 59);
+      Date endDate = c.getTime();
+      BusinessReportDTO businessReportDTO = businessReport(username, theatreID, startDate, endDate).getBody();
+      businessReportDTOHashMap.put(i+1, businessReportDTO);
+      c.add(Calendar.DAY_OF_YEAR, 1);
+    }
+    return new ResponseEntity<>(businessReportDTOHashMap, HttpStatus.OK);
   }
 
 }

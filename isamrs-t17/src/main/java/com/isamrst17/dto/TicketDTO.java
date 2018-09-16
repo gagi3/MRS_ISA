@@ -9,6 +9,7 @@ import com.isamrst17.model.Ticket.Type;
 public class TicketDTO {
 
   private Long id;
+  private String showName;
   private String number;
   private Date issueDate;
   private Double price;
@@ -22,6 +23,7 @@ public class TicketDTO {
 
   public TicketDTO(Ticket ticket) {
     this.id = ticket.getId();
+    this.showName = ticket.getScreening().getShow().getShowName();
     this.number = ticket.getNumber();
     this.issueDate = ticket.getIssueDate();
     this.price = ticket.getPrice();
@@ -93,5 +95,13 @@ public class TicketDTO {
 
   public void setScreening(ScreeningDTO screening) {
     this.screening = screening;
+  }
+
+  public String getShowName() {
+    return showName;
+  }
+
+  public void setShowName(String showName) {
+    this.showName = showName;
   }
 }
