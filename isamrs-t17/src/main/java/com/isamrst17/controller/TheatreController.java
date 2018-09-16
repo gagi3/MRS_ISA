@@ -1,5 +1,6 @@
 package com.isamrst17.controller;
 
+import com.isamrst17.dto.AddressDTO;
 import com.isamrst17.dto.BusinessReportDTO;
 import com.isamrst17.dto.CityDTO;
 import com.isamrst17.dto.MessageDTO;
@@ -309,6 +310,26 @@ public class TheatreController {
       theatreService.save(theatre);
     }
     return new ResponseEntity<>(messageDTO, HttpStatus.CREATED);
+  }
+
+  @RequestMapping(value = "/theatres/edit/{username}", method = RequestMethod.POST, consumes = "application/json")
+  public ResponseEntity<MessageDTO> editTheatre(@PathVariable String username, @PathVariable Long theatreID, @RequestBody TheatreDTO theatreDTO) {
+    MessageDTO messageDTO = new MessageDTO();
+    Admin u = adminService.findByUsername(username);
+    if (!(u instanceof TheatreAdmin)) {
+      messageDTO.setError("Only theatre admins are allowed to edit shows.");
+      return new ResponseEntity<>(messageDTO, HttpStatus.UNAUTHORIZED);
+    }
+    Theatre t = theatreService.find(theatreID);
+    if (!theatreService.findAll().contains(t)) {
+      messageDTO.setError("Theatre with this ID doesn't exist!");
+      return new ResponseEntity<>(messageDTO, HttpStatus.CONFLICT);
+    } else {
+      t.setTheatreName(theatreDTO.getName());
+      t.setTheatreDesc(theatreDTO.getDesc());
+      theatreService.save(t);
+    }
+    return new ResponseEntity<>(messageDTO, HttpStatus.OK);
   }
 
   @RequestMapping(value = "/rooms/add/{username}/{theatreID}/{row}/{col}", method = RequestMethod.POST)
