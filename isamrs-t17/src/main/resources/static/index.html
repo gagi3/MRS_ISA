@@ -30,6 +30,11 @@
 
 </head>
 <body>
+<script>
+	var usrnm = localStorage.getItem('loggedIn');
+	if (usrnm != null)
+		window.location = "http://localhost:8080/index2.html";
+</script>
 
 <div class="page">
   <div class="sidebar">
@@ -183,7 +188,5 @@
 
 <script src="js/common.js"></script>
 <script src="js/jquery.cookie.js"></script>
-<script src="js/custom/logincheck.js"></script>
-<script src="js/custom/logout.js"></script>
 </body>
 </html>
