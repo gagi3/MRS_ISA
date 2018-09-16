@@ -197,8 +197,80 @@ function del() {
 };
 
 function screening() {
+  debugger;
+  window.location.href = "http://localhost:8080/addScreening.html";
   console.log("Screening.");
-  var username = localStorage.getItem('loggedIn');
-  var showID = localStorage.getItem('showID');
-  var theatreID = localStorage.getItem('theatreID');
+  // var username = localStorage.getItem('loggedIn');
+  // var showID = localStorage.getItem('showID');
+  // var theatreID = localStorage.getItem('theatreID');
+  // theatreID = "2";
+  // $.ajax({
+  //   url: "http://localhost:8080/api/admin/login/check/" + username,
+  //   type : "GET",
+  //   success: function () {
+  //   var regularPrice;
+  //   var VIPPrice;
+  //   var roomID;
+  //   var screeningDTO;
+  //     $(".container-card100").remove();
+  //     $(".card-wrapper").append('<form id="addScreeningForm" class="add100-form validate-form" action="#">\n'
+  //         + '\n'
+  //         + '                  <span id="logintext" class="login100-form-text">\n'
+  //         + '                    Add a screening\n'
+  //         + '                  </span>\n'
+  //         + '\n'
+  //         + '                  <div class="wrap-input100">\n'
+  //         + '                    <input id="date" class="input100" type="datetime-local" name="date" required title="Date" onchange="date = this.value">\n'
+  //         + '                    <span class="focus-input100" data-placeholder="Date"></span>\n'
+  //         + '                  </div>\n'
+  //         + '\n'
+  //         + '                  <div class="wrap-input100">\n'
+  //         + '                    <input id="regularPrice" class="input100" type="number" name="regularPrice" required title="Regular price" onchange="regularPrice = this.value">\n'
+  //         + '                    <span class="focus-input100" data-placeholder="Regular price"></span>\n'
+  //         + '                  </div>\n'
+  //         + '\n'
+  //         + '                  <div class="wrap-input100">\n'
+  //         + '                    <input id="VIPPrice" class="input100" type="number" name="VIPPrice" required title="VIP price" onchange="VIPPrice = this.value">\n'
+  //         + '                    <span class="focus-input100" data-placeholder="VIP price"></span>\n'
+  //         + '                  </div>\n'
+  //         + '\n'
+  //         + '                  <div class="wrap-input100">\n'
+  //         + '                    <input id="room" class="input100" type="text" name="room" required title="Room" onchange="roomID = this.value">\n'
+  //         + '                    <span class="focus-input100" data-placeholder="Room"></span>\n'
+  //         + '                  </div>\n'
+  //         + '\n'
+  //         + '                  <div class="container-login100-form-btn">\n'
+  //         + '                    <div class="wrap-login100-form-btn">\n'
+  //         + '                      <div class="login100-form-bgbtn"></div>\n'
+  //         + '                      <button class="login100-form-btn" type="submit" id="submit">\n'
+  //         + '                        ADD\n'
+  //         + '                      </button>\n'
+  //         + '                    </div>\n'
+  //         + '                  </div>\n'
+  //         + '                </form>'
+  //         + '<script>var regularPrice = $(\'#regularPrice\').val();\n'
+  //         + '      var VIPPrice = $(\'#VIPPrice\').val();\n'
+  //         + '      var roomID = $(\'#roomID\').val();\n'
+  //         + '      var screeningDTO = {"id":"1","date":date};\n'
+  //         + '</script>');
+  //     // var regularPrice = $('#regularPrice').val();
+  //     // var VIPPrice = $('#VIPPrice').val();
+  //     // var roomID = $('#roomID').val();
+  //     // var screeningDTO = {"id":"1","date":date};
+  //     $('#addScreeningForm').submit(function () {
+  //       $.ajax({
+  //         url: "http://localhost:8080/api/theatre/screenings/add/" + username + "/" + theatreID + "/" + showID + "/" + roomID + "/" + regularPrice + "/" + VIPPrice,
+  //         type: "POST",
+  //         data: JSON.stringify(screeningDTO),
+  //         success: function (data) {
+  //           console.log("Added.")
+  //         },
+  //         error: function (xhr, ajaxOptions, thrownError) {
+  //           resp = $.parseJSON(xhr.responseText);
+  //           alert(resp.error);
+  //         }
+  //       })
+  //     })
+  //   }
+  // })
 }

@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 //@Table(name = "screening")
@@ -24,6 +25,7 @@ public class Screening {
   private Theatre theatre;
 
   //@Column(name="screening_date")
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
   private Date date;
 
   @OneToMany(mappedBy = "screening", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
