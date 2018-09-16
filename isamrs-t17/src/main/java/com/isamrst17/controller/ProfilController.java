@@ -14,14 +14,14 @@ import com.isamrst17.model.User;
 import com.isamrst17.service.UserService;
 
 @Controller
-@RequestMapping(value = "/api/profile")
+@RequestMapping("/api/profile")
 public class ProfilController {
 
 	@Autowired
 	public UserService userService;
 	
 	@RequestMapping(value = "/show/{username}", method = RequestMethod.GET)
-	public ResponseEntity<UserDTO> showData(@PathVariable String username) {
+	public ResponseEntity<UserDTO> showData(@PathVariable("username") String username) {
 		User u = userService.findByUsername(username);
 		if(!userService.findAll().contains(u))
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
