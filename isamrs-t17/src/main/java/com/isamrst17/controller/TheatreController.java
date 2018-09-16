@@ -117,6 +117,19 @@ public class TheatreController {
     return new ResponseEntity<>(screeningDTO, HttpStatus.OK);
   }
 
+  @RequestMapping(value = "/screenings/{theatreID}/{showID}", method = RequestMethod.GET)
+  public ResponseEntity<List<ScreeningDTO>> getTheatreAndShowScreenings(@PathVariable Long theatreID, @PathVariable Long showID){
+    Theatre theatre = theatreService.find(theatreID);
+    List<ScreeningDTO> screeningDTO = new ArrayList<>();
+    for (Screening screening : theatre.getScreenings()) {
+      Show show = screening.getShow();
+      if (show.equals(showService.find(showID)) && showService.findAll().contains(show)) {
+        screeningDTO.add(new ScreeningDTO(screening));
+      }
+    }
+    return new ResponseEntity<>(screeningDTO, HttpStatus.OK);
+  }
+
   @RequestMapping(value = "/theatres/add/{username}", method = RequestMethod.POST, consumes = "application/json")
   public ResponseEntity<MessageDTO> addTheatre(@RequestBody TheatreDTO theatreDTO, @PathVariable String username) {
     MessageDTO messageDTO = new MessageDTO();

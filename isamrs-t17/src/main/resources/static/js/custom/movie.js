@@ -1,5 +1,8 @@
 $("#addMovieForm").submit(function(e) {
   debugger;
+  var username = localStorage.getItem('loggedIn');
+  username = encodeURIComponent(username);
+  var usr = {"username": username};
   e.preventDefault();
   var movieName = $("#movieName").val();
   var actor1 = $("#actor1").val();
@@ -27,11 +30,9 @@ $("#addMovieForm").submit(function(e) {
       "length": length
     };
 
-    var username = localStorage.getItem('loggedIn');
-
 
     $.ajax({
-      url: "http://localhost:8080/api/show/movie/add/"+username,
+      url: "http://localhost:8080/api/show/movie/add/"+usr.username,
       type: "POST",
       datatype: "json",
       data: JSON.stringify(showDTO),

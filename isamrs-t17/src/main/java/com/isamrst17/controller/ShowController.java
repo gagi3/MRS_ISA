@@ -9,11 +9,13 @@ import com.isamrst17.model.Show.ShowType;
 import com.isamrst17.model.Theatre;
 import com.isamrst17.model.TheatreAdmin;
 import com.isamrst17.model.Ticket;
+import com.isamrst17.model.User;
 import com.isamrst17.service.AdminService;
 import com.isamrst17.service.ScreeningService;
 import com.isamrst17.service.ShowService;
 import com.isamrst17.service.TheatreService;
 import com.isamrst17.service.TicketService;
+import com.isamrst17.service.UserService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -48,11 +50,14 @@ public class ShowController {
   @Autowired
   public TicketService ticketService;
 
-  @RequestMapping(value = "/movie/add/{username}", method = RequestMethod.POST)
+  @Autowired
+  public UserService userService;
+
+  @RequestMapping(value = "/movie/add/{username:.+}", method = RequestMethod.POST)
   public ResponseEntity<MessageDTO> addMovie(@RequestBody ShowDTO showDTO, @PathVariable String username) {
     MessageDTO messageDTO = new MessageDTO();
     Admin u = adminService.findByUsername(username);
-    if (!(u instanceof TheatreAdmin)) {
+    if (u == null) {
       messageDTO.setError("Only theatre admins are allowed to add shows.");
       return new ResponseEntity<>(messageDTO, HttpStatus.UNAUTHORIZED);
     }
@@ -115,15 +120,15 @@ public class ShowController {
     }
   }
 
-  @RequestMapping(value = "/edit/{username}", method = RequestMethod.POST)
-  public ResponseEntity<MessageDTO> editShow(@RequestBody ShowDTO showDTO, @PathVariable String username) {
+  @RequestMapping(value = "/edit/{username}/{showID}", method = RequestMethod.POST)
+  public ResponseEntity<MessageDTO> editShow(@RequestBody ShowDTO showDTO, @PathVariable String username, @PathVariable Long showID) {
     MessageDTO messageDTO = new MessageDTO();
     Admin u = adminService.findByUsername(username);
     if (!(u instanceof TheatreAdmin)) {
       messageDTO.setError("Only theatre admins are allowed to edit shows.");
       return new ResponseEntity<>(messageDTO, HttpStatus.UNAUTHORIZED);
     }
-    Show show = showService.find(showDTO.getId());
+    Show show = showService.find(showID);
     if (!showService.findAll().contains(show)) {
       messageDTO.setError("Show with this ID doesn't exist!");
       return new ResponseEntity<>(messageDTO, HttpStatus.CONFLICT);

@@ -33,7 +33,7 @@ public class AdminController {
   @Autowired
   private TheatreService theatreService;
 
-  @RequestMapping(value = "/login/check/{username}", method = RequestMethod.GET)
+  @RequestMapping(value = "/login/check/{username:.+}", method = RequestMethod.GET)
   public Boolean loginCheck(@PathVariable String username) {
     Admin admin = adminService.findByUsername(username);
     if (admin == null) {
