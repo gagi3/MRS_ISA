@@ -3,8 +3,7 @@
 $('.card-wrapper').ready(function() {
   var username = localStorage.getItem('loggedIn');
   // username = "admin";
-  var showID = "1";
-  debugger;
+  var showID = "2";
   $.ajax({
     url: "http://localhost:8080/api/admin/login/check/" + username,
     type: "GET",
@@ -17,6 +16,7 @@ $('.card-wrapper').ready(function() {
           console.log("FU");
           var movie = data;
           localStorage.setItem('showID', movie.id);
+          var sid = movie.id;
           $('.card-wrapper').append('<div class="container-card100">\n'
               + '                  <div class="wrap-card100">\n'
               + '                    <span class="card100-form-title cardTitle" id="cardTitle">\n'
@@ -48,7 +48,7 @@ $('.card-wrapper').ready(function() {
               + '                        </button>\n'
               + '                      </div>\n'
               + '                    </div>\n'
-              + '                    <div class="container-card100-form-btn repertoire-cont" id="edit-button">\n'
+              + '                    <div class="container-card100-form-btn repertoire-cont" id="edit-button" onclick="edit()">\n'
               + '                      <div class="wrap-content100-form-btn">\n'
               + '                        <div class="topbar100-form-bgbtn"></div>\n'
               + '                        <button class="card100-form-btn repertoire-button" type="submit">\n'
@@ -56,7 +56,7 @@ $('.card-wrapper').ready(function() {
               + '                        </button>\n'
               + '                      </div>\n'
               + '                    </div>\n'
-              + '                    <div class="container-card100-form-btn repertoire-cont" id="delete-button">\n'
+              + '                    <div class="container-card100-form-btn repertoire-cont" id="delete-button" onclick="del()">\n'
               + '                      <div class="wrap-content100-form-btn">\n'
               + '                        <div class="topbar100-form-bgbtn"></div>\n'
               + '                        <button class="card100-form-btn repertoire-button" type="submit">\n'
@@ -80,10 +80,10 @@ $('.card-wrapper').ready(function() {
 
 });
 
-$("#edit-button").click(function () {
-
+function edit() {
   var username = localStorage.getItem('loggedIn');
   var showID = localStorage.getItem('showID');
+  console.log("Editing.");
   $.ajax({
     url: "http://localhost:8080/api/admin/login/check/" + username,
     type : "GET",
@@ -164,13 +164,13 @@ $("#edit-button").click(function () {
         };
 
         $.ajax({
-          url: "http://localhost:8080/api/show/movie/edit/"+username+"/"+showID,
+          url: "http://localhost:8080/api/show/edit/"+username+"/"+showID,
           type: "POST",
           datatype: "json",
           data: JSON.stringify(showDTO),
           contentType: "application/json",
           success: function (data) {
-            window.location.href = "http://localhost:8080/shows.html";
+            window.location.href = "http://localhost:8080/show.html";
           },
           error: function (xhr, ajaxOptions, thrownError) {
             resp = $.parseJSON(xhr.responseText);
@@ -180,9 +180,11 @@ $("#edit-button").click(function () {
       })
       }
     })
-});
+};
 
-$("#delete-button").click(function () {
+function del() {
+  debugger;
+  console.log("Deletion.");
   var username = localStorage.getItem('loggedIn');
   var showID = localStorage.getItem('showID');
   $.ajax({
@@ -192,4 +194,4 @@ $("#delete-button").click(function () {
         console.log("deleted");
     }
   })
-});
+};

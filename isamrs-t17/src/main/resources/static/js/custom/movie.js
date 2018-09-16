@@ -38,7 +38,8 @@ $("#addMovieForm").submit(function(e) {
       data: JSON.stringify(showDTO),
       contentType: "application/json",
       success: function (data) {
-        window.location.href = "http://localhost:8080/shows.html";
+        localStorage.setItem("showID", showDTO.id);
+        window.location.href = "http://localhost:8080/show.html";
       },
       error: function (xhr, ajaxOptions, thrownError) {
         resp = $.parseJSON(xhr.responseText);
