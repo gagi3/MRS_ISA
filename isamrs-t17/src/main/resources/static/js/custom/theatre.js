@@ -116,3 +116,8 @@ $('.card-wrapper').ready(function() {
     }
   })
 });
+
+$("#repertoire-button").submit(function() {
+  debugger;
+
+});

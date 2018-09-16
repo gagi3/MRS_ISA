@@ -36,6 +36,9 @@ public class AdminController {
   @RequestMapping(value = "/login/check/{username}", method = RequestMethod.GET)
   public Boolean loginCheck(@PathVariable String username) {
     Admin admin = adminService.findByUsername(username);
+    if (admin == null) {
+      return Boolean.FALSE;
+    }
     return adminService.findAll().contains(admin);
   }
 
@@ -43,10 +46,10 @@ public class AdminController {
   public ResponseEntity<MessageDTO> appointAdmin(@PathVariable String adminUsername, @PathVariable String userUsername, @PathVariable Long theatreID) {
     MessageDTO messageDTO = new MessageDTO();
     Admin u = adminService.findByUsername(adminUsername);
-    if (!adminService.findAll().contains(u)) {
-      messageDTO.setError("Admin doesn't exist.");
-      return new ResponseEntity<>(messageDTO, HttpStatus.NOT_FOUND);
-    }
+//    if (!adminService.findAll().contains(u)) {
+//      messageDTO.setError("Admin doesn't exist.");
+//      return new ResponseEntity<>(messageDTO, HttpStatus.NOT_FOUND);
+//    }
     if (!(u instanceof SystemAdmin)) {
       messageDTO.setError("Only system admins are allowed to appoint theatre admins.");
       return new ResponseEntity<>(messageDTO, HttpStatus.UNAUTHORIZED);
@@ -63,8 +66,10 @@ public class AdminController {
       return new ResponseEntity<>(messageDTO, HttpStatus.NOT_FOUND);
     }
     theatres.add(theatre);
-    Admin a = new TheatreAdmin(u.getUsername(), u.getPassword(), u.getAddress(), u.getPhoneNumber(), Type.Theatre, theatres);
+    TheatreAdmin a = new TheatreAdmin(u.getUsername(), u.getPassword(), u.getAddress(), u.getPhoneNumber(), Type.Theatre, theatres);
+    theatre.setTheatreAdmin(a);
     adminService.save(a);
+    theatreService.save(theatre);
     return new ResponseEntity<>(messageDTO, HttpStatus.OK);
   }
 
