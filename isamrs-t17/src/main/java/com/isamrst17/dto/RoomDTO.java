@@ -6,7 +6,6 @@ public class RoomDTO {
 
   private Long id;
   private String name;
-  private TheatreDTO theatre;
 
   public RoomDTO() {
   }
@@ -14,7 +13,6 @@ public class RoomDTO {
   public RoomDTO(Room room) {
     this.id = room.getId();
     this.name = room.getName();
-    this.theatre = new TheatreDTO(room.getTheatre());
   }
 
   public Long getId() {
@@ -33,11 +31,4 @@ public class RoomDTO {
     this.name = name;
   }
 
-  public TheatreDTO getTheatre() {
-    return theatre;
-  }
-
-  public void setTheatre(TheatreDTO theatre) {
-    this.theatre = theatre;
-  }
 }
