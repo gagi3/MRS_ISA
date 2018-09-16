@@ -43,7 +43,7 @@ $('.card-wrapper').ready(function() {
               + '                    <div class="container-card100-form-btn repertoire-cont" id="repertoire-cont">\n'
               + '                      <div class="wrap-content100-form-btn">\n'
               + '                        <div class="topbar100-form-bgbtn"></div>\n'
-              + '                        <button class="card100-form-btn repertoire-button" type="submit" id="screening-button">\n'
+              + '                        <button class="card100-form-btn repertoire-button" type="submit" id="screening-button" onclick="screening()">\n'
               + '                          MAKE A SCREENING\n'
               + '                        </button>\n'
               + '                      </div>\n'
@@ -195,3 +195,10 @@ function del() {
     }
   })
 };
+
+function screening() {
+  console.log("Screening.");
+  var username = localStorage.getItem('loggedIn');
+  var showID = localStorage.getItem('showID');
+  var theatreID = localStorage.getItem('theatreID');
+}
