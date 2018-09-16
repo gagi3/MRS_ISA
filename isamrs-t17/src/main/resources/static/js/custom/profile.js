@@ -14,10 +14,7 @@ $(document).ready(function() {
 	    url: "http://localhost:8080/api/profile/show/"+usrnm,
 	    type: "GET",
 	    success: function(data) {
-	      $.each(data, function(i) {
-	        var user = data[i];
-	        console.log(user);
-	      })
+	      
 	    }
     })
  });

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Theatrix | Profile</title>
+  <title>Theatrix | Cinemas</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!--===============================================================================================-->
@@ -25,15 +25,11 @@
   <!--===============================================================================================-->
   <link rel="stylesheet" type="text/css" href="css/util.css">
   <link rel="stylesheet" type="text/css" href="css/main.css">
-  <link rel="stylesheet" type="text/css" href="css/profile.css">
-  
   <script src="js/jquery-3.3.1.js"></script>
   <!--===============================================================================================-->
 
 </head>
 <body>
-
-
 
 <div class="page">
   <div class="sidebar">
@@ -125,43 +121,23 @@
           <div class="wrap-topbar100">
             <div class="topbar100-form" id="topbar">
               <div class="row">
-                <nav>
-                  <ul>
-                    <a href="index.html" id="logo-but" name="logobutton">
+                <nav>  
+                <a href="index.html" id="logo-but" name="logobutton">
                       <img src="images/icons/logo.png" height="52" width="52">
                     </a>
                     <a href="index.html" id="site-name" name="sitename">
                       <span class="topbar100-form-title">
-                          Theatrix | Cinemas
+                          Theatrix | Main Page
                       </span>
-                    </a>
-                    <div id="buttons">
-                      <li id="login">
-                        <a href="login.html" id="log-but" name="Login2">
-                          <div class="container-topbar100-form-btn">
-                            <div class="wrap-topbar100-form-btn">
-                              <div class="topbar100-form-bgbtn"></div>
-                              <button class="topbar100-form-btn" type="submit" id="login-button">
-                                Login
-                              </button>
-                            </div>
-                          </div>
-                        </a>
-                      </li>
-                      <li id="signup">
-                        <a href="register.html" id="reg-but" name="Register2">
-                          <div class="container-topbar100-form-btn">
-                            <div class="wrap-topbar100-form-btn">
-                              <div class="topbar100-form-bgbtn"></div>
-                              <button class="topbar100-form-btn" type="submit" id="register-button">
-                                Register
-                              </button>
-                            </div>
-                          </div>
-                        </a>
-                      </li>
-                    </div>
-                  </ul>
+                    </a>             
+                       <div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn" type="submit" id="submit">
+								Logout
+							</button>
+						</div>
+					</div>
                 </nav>
               </div>
             </div>
@@ -177,39 +153,38 @@
         <div class="container-content100">
           <div class="wrap-content100">
             <div class="content100-form">
-
-              
-              	<div class="main_content">
-              		<div class="left_side">
-	              		<img id="profile_pic" src="images/profile.png"/>
-	              		<p id="name">Name</p>
-	              		<p id="surname">Surname</p>
-	              		
-
-						<div class="wrap-login100-form-btn" id="change-info">
-							<div class="login100-form-bgbtn"></div>
-							<button class="login100-form-btn" type="submit" id="submit">
-								Update Profile Info
-							</button>
-						</div>
-
-              		</div>
-              		<div id="profile-info">
-              			<div id="user-info">
-              				<p>Name</p>
-              				<input type="text" name="name" disabled="disabled">
-              				<p>Surname</p>
-              				<input type="text" name="surname" disabled="disabled">
-              				<p>Phone Number</p>
-              				<input type="text" name="phone_num" disabled="disabled">
-              				<p>City</p>
-              				<input type="text" name="city" disabled="disabled">
-              				<p>Address</p>
-              				<input type="text" name="address" disabled="disabled">	
-              			</div>
-              		</div>
-				</div>       
-            
+              <!--<div id="background" class="topbar100-logo">-->
+              <!--<img id="bg-img" src="images/icons/logo.png">-->
+              <!--</div>-->
+              <span class="content100-form-text">
+                What do you want to browse?
+              </span>
+              <div id="buts">
+                <li id="shows">
+                  <a href="playhouses.html" id="show-but" name="ShowButton">
+                    <div class="container-topbar100-form-btn">
+                      <div class="wrap-content100-form-btn">
+                        <div class="topbar100-form-bgbtn"></div>
+                        <button class="content100-form-btn" type="submit" id="show-button">
+                          Play Houses
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+                <li id="ttheatres">
+                  <a href="theatres.html" id="the-but" name="TheatreButton">
+                    <div class="container-topbar100-form-btn">
+                      <div class="wrap-content100-form-btn">
+                        <div class="topbar100-form-bgbtn"></div>
+                        <button class="content100-form-btn" type="submit" id="theatre-button">
+                          Cinemas
+                        </button>
+                      </div>
+                    </div>
+                  </a>
+                </li>
+              </div>
             </div>
           </div>
         </div>
@@ -218,11 +193,12 @@
   </section>
 </div>
 
+
 <script src="js/custom/logincheck.js"></script>
 <script src="js/custom/logout.js"></script>
 <script src="js/common.js"></script>
 <script src="js/jquery.cookie.js"></script>
 <script src="js/custom/main.js"></script>
-<script src="js/custom/profile.js"></script>
+<script src="js/custom/logout.js"></script>
 </body>
 </html>

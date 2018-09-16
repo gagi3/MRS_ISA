@@ -121,10 +121,10 @@ public class UserController {
 	      System.out.println(user.getUsername());
 	      MessageDTO m = new MessageDTO();
 
-	      if (!user.getActive()) {
+	      /*if (!user.getActive()) {
 	    	  m.setError("User not active");
 	    	  return new ResponseEntity<>(m, HttpStatus.BAD_REQUEST);
-	      }
+	      }*/
 
 	      m.setId(user.getId());
 	      m.setJwt(tokenUtils.generateToken(details));

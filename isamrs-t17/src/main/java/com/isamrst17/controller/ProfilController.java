@@ -20,7 +20,7 @@ public class ProfilController {
 	@Autowired
 	public UserService userService;
 	
-	@RequestMapping(value = "/profil/show/{username}", method = RequestMethod.GET)
+	@RequestMapping(value = "/show/{username}", method = RequestMethod.GET)
 	public ResponseEntity<UserDTO> showData(@PathVariable String username) {
 		User u = userService.findByUsername(username);
 		if(!userService.findAll().contains(u))

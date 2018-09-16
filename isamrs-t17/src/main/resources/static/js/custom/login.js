@@ -21,7 +21,7 @@ $("#loginForm").submit(function (e) {
           localStorage.jwt = data.jwt;
           localStorage.role = 'USER';
           localStorage.setItem('loggedIn', username);
-          window.location.href = "http://localhost:8080/index.html";
+          window.location.href = "http://localhost:8080/index2.html";
         },
         error: function(xhr, ajaxOptions, thrownError) {
           resp = $.parseJSON(xhr.responseText);
