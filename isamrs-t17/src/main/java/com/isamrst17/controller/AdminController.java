@@ -66,9 +66,18 @@ public class AdminController {
       return new ResponseEntity<>(messageDTO, HttpStatus.NOT_FOUND);
     }
     theatres.add(theatre);
-    TheatreAdmin a = new TheatreAdmin(u.getUsername(), u.getPassword(), u.getAddress(), u.getPhoneNumber(), Type.Theatre, theatres);
-    theatre.setTheatreAdmin(a);
-    adminService.save(a);
+//    TheatreAdmin a = new TheatreAdmin(user.getUsername(), user.getPassword(), user.getAddress(), user.getPhoneNumber(), Type.Theatre, theatres);
+    TheatreAdmin ad = new TheatreAdmin();
+    ad.make(user, theatres);
+//    ad.setUsername(user.getUsername());
+//    ad.setPassword(user.getPassword());
+//    ad.setAddress(user.getAddress());
+//    ad.setPhoneNumber(user.getPhoneNumber());
+    userService.remove(user.getId());
+    adminService.save(ad);
+    TheatreAdmin as = (TheatreAdmin) userService.findByUsername(ad.getUsername());
+    theatre.setTheatreAdmin(as);
+
     theatreService.save(theatre);
     return new ResponseEntity<>(messageDTO, HttpStatus.OK);
   }
