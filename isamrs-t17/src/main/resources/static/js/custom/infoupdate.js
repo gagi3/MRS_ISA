@@ -1,5 +1,7 @@
-//var emailRegex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-
+$(document).ready(function() {
+	
+	var usrnm = localStorage.getItem('loggedIn');
+	
   $("#registerForm").submit(function(e) {
 	  debugger;
     e.preventDefault();
@@ -14,20 +16,12 @@
 
 	var isnum = /^\d+$/.test(phoneNumber);
 	
-    if (username.length == 0 || password.length == 0 || firstName.length == 0  || phoneNumber.length == 0 || city.length == 0 || address.length == 0) {
+    if (firstName.length == 0  || phoneNumber.length == 0 || city.length == 0 || address.length == 0) {
       alert("All fields must be filled.");
-    } else if (password != password2) {
-      alert("Passwords don't match.");
-    } else if(!isnum) {
+    }  else if(!isnum) {
     	alert("Phone Number can contain only numbers");
-    }else if(password.length < 8) {
-    	alert("Password must contain at least 8 characters.");
-    } /*else if(!emailRegex.test(String(email).toLowerCase())) {     Regularan izraz za proveru Email adrese
-		alert("Neispravna email adresa!");
-    }*/ else {
-      var registerDTO = {
-        "username": username,
-        "password": password,
+    } else {
+      var updateDTO = {
         "firstName": firstName,
         "lastName": lastName,
         "phoneNumber": phoneNumber,
@@ -37,13 +31,13 @@
  
 
       $.ajax({
-        url: "http://localhost:8080/api/user/register",
+        url: "http://localhost:8080/api/user/infoupdate/"+usrnm,
         type: "POST",
         datatype: "json",
-        data: JSON.stringify(registerDTO),
+        data: JSON.stringify(updateDTO),
         contentType: "application/json",
         success: function (data) {
-        	window.location.href = "http://localhost:8080/login.html";
+        	window.location.href = "http://localhost:8080/profile.html";
         },
         error: function (xhr, ajaxOptions, thrownError) {
           resp = $.parseJSON(xhr.responseText);
@@ -54,3 +48,4 @@
   });
   
   
+})

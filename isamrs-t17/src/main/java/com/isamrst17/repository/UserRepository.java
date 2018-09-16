@@ -8,5 +8,7 @@ import com.isamrst17.model.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
   public User findByUsername(String username);
+  
   public User findByLink(String link);
+  
 }

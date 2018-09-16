@@ -33,6 +33,15 @@
 	width: 200px;
 	top: 350px;
 	left: 100px;
+	height: 80px;
+}
+
+#change-password {
+	position: absolute;
+	width: 200px;
+	height: 45px;
+	top: 450px;
+	left: 100px;
 }
 
 #profile-info {

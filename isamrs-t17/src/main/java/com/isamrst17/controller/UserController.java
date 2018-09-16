@@ -1,6 +1,5 @@
 package com.isamrst17.controller;
 
-import com.isamrst17.model.SystemAdmin;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -26,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.isamrst17.dto.LoginDTO;
 import com.isamrst17.dto.MessageDTO;
 import com.isamrst17.dto.RegisterDTO;
+import com.isamrst17.dto.UserDTO;
 import com.isamrst17.model.Address;
 import com.isamrst17.model.City;
 import com.isamrst17.model.User;
@@ -165,4 +165,30 @@ public class UserController {
 		User user = userService.findByUsername(username);
 		return userService.findAll().contains(user);
 	}
+	
+	//Update info
+	@RequestMapping(value = "/infoupdate/{username}", method= RequestMethod.POST)
+	public ResponseEntity<MessageDTO> update_info(@RequestBody String username) {
+		User u = userService.findByUsername(username);
+		MessageDTO messageDTO = new MessageDTO();
+		if(!userService.findAll().contains(u)) {
+			messageDTO.setError("Non-existing user!");
+			return new ResponseEntity<>(messageDTO, HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(messageDTO, HttpStatus.OK);
+	}
+	
+	//Change password
+	@RequestMapping(value = "/passwordChange/{username}", method= RequestMethod.POST)
+	public ResponseEntity<MessageDTO> password_change(@RequestBody String username) {
+		User u = userService.findByUsername(username);
+		MessageDTO messageDTO = new MessageDTO();
+		if(!userService.findAll().contains(u)) {
+			messageDTO.setError("Non-existing user!");
+			return new ResponseEntity<>(messageDTO, HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(messageDTO, HttpStatus.OK);
+	}
 }
+
+
